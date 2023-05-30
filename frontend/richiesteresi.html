@@ -1,0 +1,245 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src * data: 'unsafe-eval' 'unsafe-inline' blob:; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Produzione">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Produzione" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title id="titolo">Ricieste di reso</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" onclick="esci()" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>	
+
+				<div class="row fasciaIntestazione">
+					<h3 id="lblIntestazione" name="lblIntestazione" class="testoTroncato1 cx">Lista richieste resi</h3> 
+				</div>
+				
+				
+			</div>
+			
+			<div id="divCorpo" class="posTopA110p posBottomA65p padSx5 w100-10p scrool">
+                <div id="intestazioneGriglia" class="row intestazioneGriglie clrScuro w98 h40p tableStyle">
+					<div class="elementiGriglia w100 testoNormale">
+                        <div class="row w20 sx cel">
+                            <div class="w100 sx ">DOCUMENTO</div>
+                            <div class="w100 sx ">DATA</div>
+                        </div>
+                        <div class="row w30 sx cel">RAGIONE SOCIALE</div>
+                        <div class="row w15 sx cel">IMPONIBILE</div>
+                        <div class="row w25 sx cel">
+                            <div>STATO</div>
+                            <div>STATO DDT</div>
+                        </div>
+                        <div class="row w10 cx cel">RIGHE</div>
+                    </div>
+				</div>
+                
+                <ul id="elencoDocumenti" name="elencoDocumenti" class="ulElenco posTopA40p posBottomA5p elencoR2 w98 elencoBase padTop2p5" onscroll="">
+
+                </ul>
+				
+			</div>
+
+			<div id="divPiede" class="posBottomA w100">
+
+				<div id="cmdBottom" class="w100">
+					<div class="pulsantieraDescrizione" id="pulsantieraDescrizione">
+						<!-- <label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" href="#" class="w33" title="Filtro Prodotti"><img src="img/bianche/filter.svg" /></label> -->
+						
+                        <label id="cmdFiltri" name="cmdFiltri" class="w50 h65p btnListaResi" title="Filtri" onclick="openPage('StatoOrdine', document.getElementById('tabStatoOrdine'))" for="nav-toggleF">
+                            <img src="img/bianche/filter.svg" />
+                            <div class="testoTroncato1 normale testoPulsantiera" id="txtcmdProduzione">
+                                Filtri
+                            </div>
+                        </label>
+                        <label id="cmdListaResi" name="cmdListaResi" class="w50 btnLisaResi" title="Lista Resi" onclick="avviaCarRichiesteResi()">
+                            <img src="img/bianche/refresh.svg" />
+                            <div class="testoTroncato1 normale testoPulsantiera">
+                                Aggiorna
+                            </div>
+                        </label>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<input type="checkbox" id="nav-toggleF" hidden>
+        <nav id="navF" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="navTesta w100 posTopA5p">
+				<div id="tabLink" name="tabLink" class="tablink-content">
+					<button class="tablink intestazione" id="tabCliente" onclick="openPage('Cliente', this)">Cliente</button>
+					<button class="tablink intestazione" id="tabAgente" onclick="openPage('Agente', this)">Agente</button>
+					<button class="tablink intestazione" id="tabStatoOrdine" onclick="openPage('StatoOrdine', this)">Stato</button>
+					<button class="tablink intestazione" id="tabNumero" onclick="openPage('Numero', this)">Altro</button>
+				</div>
+			</div>
+			
+			<div class="navCorpo w100 posTopA58p posBottomA">
+				<div hMeno="165" id="Cliente" name="Cliente" class="tabcontent w100 posTopA posBottomA">	
+					<div id="divRicercaCliente" name="divRicercaCliente" class="row has-float-label w100">
+						<input id="txtRicercaCliente" name="txtRicercaCliente" type="text" placeholder="Ricerca Cliente ..." onkeyup="txtRicercaChange(this,'txtRicercaCliente','elencoClienti','',2);">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaCliente'); input.value = ''; input.focus(); txtRicercaChange(input,'txtRicercaCliente','elencoClienti','',2);"></span>
+						<label for="txtRicercaCliente" >Ricerca Cliente ...</label>
+					</div>
+	
+					<ul id="elencoCliente" name="elencoCliente" class="ulNavElenco elencoR3 w100 posTopA52p posBottomA100p" onscroll="">
+						
+					</ul>
+
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroCliente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroCliente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p marg10Dx posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="165" id="Agente" name="Agente" class="tabcontent w100 posTopA posBottomA">
+					<div id="divRicercaAgente" name="divRicercaAgente" class="has-float-label w100">
+						<input id="txtRicercaAgente" name="txtRicercaAgente" type="text" placeholder="Ricerca Agente ..." onkeyup="ricercaSuHtml('txtRicercaAgente','elencoAgente');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaAgente'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaAgente','elencoAgente');"></span>
+						<label for="txtRicercaAgente" >Ricerca Agente ...</label>
+					</div>
+		
+					<ul id="elencoAgente" name="elencoAgente" class="elencoR1 w100 posTopA52p posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroAgente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroAgente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p marg10Dx posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="100" id="StatoOrdine" name="StatoOrdine" class="tabcontent w100 posTopA posBottomA">
+                    
+					<ul id="elencoStatoOrdine" name="elencoStatoOrdine" class="elencoR1 w100 posTopA posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<label for="nav-toggleF" href="#" class="rowDx posBottomA marg10Dx h50p w50p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+	
+				<div id="Numero" name="Numero" class="tabcontent w100 posTopA posBottomA">	
+                    <div id="divDataDa" name="divDataDa" class="row has-float-label w50">
+						<input id="txtDataDa" name="txtDataDa" type="date" placeholder="Data Da ..." onkeyup="">
+						<span class="deleteicon" onclick="var input = getElementById('txtDataDa'); input.value = ''; input.focus(); "></span>
+						<label for="txtRicercaNumeroDa" >Data Da ...</label>
+					</div>
+					<div id="divtxtDataA" name="divtxtDataA" class="row has-float-label w50">
+						<input id="txtDataA" name="txtDataA" type="date" placeholder="Data A ..." onkeyup="">
+						<span class="deleteicon" onclick="var input = getElementById('txtDataA'); input.value = ''; input.focus(); "></span>
+						<label for="txtDataA" >Data A ...</label>
+					</div>
+					<div id="divRicercaNumeroDa" name="divRicercaNumeroDa" class="row has-float-label w60">
+						<input id="txtRicercaNumeroDa" name="txtRicercaNumeroDa" type="text" placeholder="Numero Da ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaNumeroDa'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaNumeroDa" >Numero Da ...</label>
+					</div>
+					<div id="divRicercaSerieDa" name="divRicercaSerieDa" class="row has-float-label w40">
+						<input id="txtRicercaSerieDa" name="txtRicercaSerieDa" type="text" placeholder="Serie Da ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaSerieDa'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaSerieDa" >Serie Da ...</label>
+					</div>
+	
+					<div id="divRicercaNumeroA" name="divRicercaNumeroA" class="row has-float-label w60">
+						<input id="txtRicercaNumeroA" name="txtRicercaNumeroA" type="text" placeholder="Numero A ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaNumeroA'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaNumeroA" >Numero A ...</label>
+					</div>
+					<div id="divRicercaSerieA" name="divRicercaSerieA" class="row has-float-label w40">
+						<input id="txtRicercaSerieA" name="txtRicercaSerieA" type="text" placeholder="Serie A ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaSerieA'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaSerieA" >Serie A ...</label>
+					</div>
+					<div id="divDeposito" name="divDeposito" class="row has-float-label marg5Sx marg5Top w170p hide">
+						<span class="selectDefault" id="0">Sel. Deposito</span>
+						<label for="cmbDeposito">Deposito</label>
+						<select id="cmbDeposito" name="cmbDeposito" class="selectBox" onchange="changeSelect(this)">
+							<option value="0">Sel. Deposito</option>
+						</select>
+					</div>
+					<div id="divRicercaArticoloVenditaBanco" name="divRicercaArticoloVenditaBanco" class="row has-float-label w180p marg5Top marg5Sx hide">
+						<input id="ricercaArticoloVenditaBanco" name="ricercaArticoloVenditaBanco" type="text" placeholder="Ricerca Prodotto.." onkeypress="attivaRicercaComboScomparsa(this,'articoliVeBa','ulArticoliCodice')" filtro="DESCRIZIONE_' '_A.CODICE" onfocusin="attivaRicercaComboScomparsa(this,'articoliVeBa','ulArticoliCodice')" onblur="comboScomparsaChiudi(this)" onkeydown="if (event.keyCode == 9 || event.keyCode==13){cercaCodiceVeBa(this)}" fncenter="cercaCodiceVeBa(document.getElementById('ricercaArticoloVenditaBanco'))" autocomplete="off">
+	
+						<span class="deleteicon" onclick="var input = getElementById('ricercaArticoloVenditaBanco'); input.value = ''; input.focus(); avviaCarDati();"></span>
+						<label id="lblRicerca" for="ricercaArticoloVenditaBanco">Ricerca Prodotto..</label>
+						<ul id="ulArticoliCodice" campo="CODICE" name="ulArticoliCodice" class="comboScomparsa elencoR1 testoNormale w350p" onscroll="comboScomparsaScroll(this,'articoliVeBa','ulArticoliCodice','txtRicercaCodice')" onfocus="nonChiudereComboScomparsa=true;" onblur="nonChiudereComboScomparsa=false;" style="display: none;">
+	
+						</ul>
+					</div>
+					<div class="row w100">
+						<label for="nav-toggleF" href="#" class="rowDx posBottom5p marg5Top marg10Dx h50p w50p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+			</div>
+		</nav>
+        <script src="js/decimal.js" id="libreriaDecimali"></script>
+		<script src="js/richiesteResi.js"></script>
+        <script src="js/multiDocumento.js"></script>
+        <script id="sctCboScomparsa" src="componenti/elementiComboScomparsa.js"></script>
+        <script>
+            caricamentoForm(0);
+            document.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 9) {
+                // Cancel the default action, if needed
+                // event.preventDefault();
+                // Trigger the button element with a click
+                // document.getElementById("myBtn").click();
+                // alert('F4');
+                
+
+            }
+        });
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,254 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Scheda Anagrafica">
+				
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Lista Clienti</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+		
+		<script src="componenti/elementiFiltriSceltaMultipla.js"></script>
+	</head>
+	<body>
+		<input type="checkbox" id="nav-toggleL" hidden>
+        <nav id="navL" name="navL" class="nav clrSfumatoChiaro">
+            <!--<label for="nav-toggleL" class="nav-toggleL" onclick=""></label>-->
+			<div class="row navTesta w100">
+				<div id="divRicercaLocalita" name="divRicercaLocalita" class="has-float-label w100">
+					<input id="txtRicercaLocalita" name="txtRicercaLocalita" type="text" placeholder="Ricerca Località ..." onkeyup="ricercaSuHtml('txtRicercaLocalita','elencoLocalita');">
+					<span class="deleteicon" onclick="var input = getElementById('txtRicercaLocalita'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaLocalita','elencoLocalita');"></span>
+					<label for="txtRicercaLocalita" >Ricerca Località ...</label>
+				</div>	
+			</div>
+			
+			<div class="row navCorpo w100 posBottomA45p">
+				<ul id="elencoLocalita" name="elencoLocalita" class="elencoR1 w100 posTopA posBottomA5p">
+				
+				</ul>
+			</div>
+
+			<div class="navPiede posBottomA5p w100">
+				<div class="row w100 intestazione clrScuro h40p">
+					<div id="lblFiltroLocalita" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+					<div class="posRightA10p w30p"><a href="#" onclick="eliminaFiltroLocalita()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+				</div>
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleP" hidden>
+        <nav id="navP" name="navP" class="nav clrSfumatoChiaro">
+            <!--<label for="nav-toggleL" class="nav-toggleL" onclick=""></label>-->
+			<div class="row navTesta w100">
+				<div id="divRicercaProvincia" name="divRicercaProvincia" class="has-float-label w100">
+					<input id="txtRicercaProvincia" name="txtRicercaProvincia" type="text" placeholder="Ricerca Provincia ..." onkeyup="ricercaSuHtml('txtRicercaProvincia','elencoProvince');">
+					<span class="deleteicon" onclick="var input = getElementById('txtRicercaProvincia'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaProvincia','elencoProvince');"></span>
+					<label for="txtRicercaProvincia" >Ricerca Provincia ...</label>
+				</div>
+			</div>
+			
+			<div class="row navCorpo w100 posBottomA45p">
+				<ul id="elencoProvince" class="elencoR1 w100 posTopA posBottomA5p">
+			
+				</ul>
+			</div>
+
+			<div class="navPiede posBottomA5p w100">
+				<div class="intestazione clrScuro h40p">
+					<div id="lblFiltroProv" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+					<div class="posRightA10p w30p"><a href="#" onclick="eliminaFiltroProv()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+				</div>
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleZ" hidden>
+        <nav id="navZ" name="navZ" class="nav clrSfumatoChiaro">
+            <!--<label for="nav-toggleL" class="nav-toggleL" onclick=""></label>-->
+			<div class="row navTesta w100">
+				<div id="divRicercaZona" name="divRicercaZona" class="has-float-label w100">
+					<input id="txtRicercaZona" name="txtRicercaZona" type="text" placeholder="Ricerca Zona ..." onkeyup="ricercaSuHtml('txtRicercaZona','elencoZone');">
+					<span class="deleteicon" onclick="var input = getElementById('txtRicercaZona'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaZona','elencoZone');"></span>
+					<label for="txtRicercaZona" >Ricerca Zona ...</label>
+				</div>	
+			</div>
+			
+			<div class="row navCorpo w100 posBottomA45p">
+				<ul id="elencoZone" class="elencoR1 w100 posTopA posBottomA5p">
+				
+				</ul>
+			</div>
+
+			<div class="navPiede posBottomA5p w100">
+				<div class="intestazione clrScuro h40p">
+					<div id="lblFiltroZona" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+					<div class="posRightA10p w30p"><a href="#" onclick="eliminaFiltroZona()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+				</div>
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleF" hidden>
+        <nav id="navF" name="navF" class="nav clrSfumatoChiaro posBottom-60p">
+            <!--<label for="nav-toggleL" class="nav-toggleL" onclick=""></label>-->
+			<div class="row navTesta w100">
+				<div id="divRicercaFamiglia" name="divRicercaFamiglia" class="has-float-label w100">
+					<input id="txtRicercaFamiglia" name="txtRicercaFamiglia" type="text" placeholder="Ricerca Famiglia ..." onkeyup="ricercaSuHtml('txtRicercaFamiglia','elencoFamiglie');">
+					<span class="deleteicon" onclick="var input = getElementById('txtRicercaFamiglia'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaFamiglia','elencoFamiglie');"></span>
+					<label for="txtRicercaFamiglia" >Ricerca Famiglia ...</label>
+				</div>	
+			</div>
+			
+			<div class="row navCorpo w100 posBottomA45p">
+				<ul id="elencoFamiglie" class="elencoR1 w100 posTopA posBottomA5p">
+				
+				</ul>
+			</div>
+
+			<div class="navPiede posBottomA5p w100">
+				<div class="intestazione clrScuro h40p">
+					<div id="lblFiltroFamiglia" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+					<div class="posRightA10p w30p"><a href="#" onclick="eliminaFiltroFamiglia()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+				</div>
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleA" hidden>
+        <nav id="navA" name="navA" class="nav clrSfumatoChiaro posBottom-60p">
+            <!--<label for="nav-toggleL" class="nav-toggleL" onclick=""></label>-->
+			<div class="row navTesta w100">
+				<div id="divRicercaAgente" name="divRicercaAgente" class="has-float-label w100">
+					<input id="txtRicercaAgente" name="txtRicercaagente" type="text" placeholder="Ricerca Agente ..." onkeyup="ricercaSuHtml('txtRicercaAgente','elencoAgente');">
+					<span class="deleteicon" onclick="var input = getElementById('txtRicercaAgente'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaAgente','elencoAgente');"></span>
+					<label for="txtRicercaAgente" >Ricerca Agente ...</label>
+				</div>	
+			</div>
+			
+			<div class="row navCorpo w100 posBottomA45p">
+				<ul id="elencoAgente" class="elencoR1 w100 posTopA posBottomA5p">
+				
+				</ul>
+			</div>
+
+			<div class="navPiede posBottomA5p w100">
+				<div class="intestazione clrScuro h40p">
+					<div id="lblFiltroAgente" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+					<div class="posRightA10p w30p"><a href="#" onclick="eliminaFiltroAgente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+				</div>
+			</div>
+		</nav>
+
+		<div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="row w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#" onclick="clickBack()"><img class="imgPiccola w60p" src="img/bianche/back.svg" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>
+
+				<div class="row w100-5p">
+					<div id="divMandante" name="divMandante" class="row marg5Top has-float-label w25 hide">
+						<span class="selectDefault" id="0">Seleziona Mandante</span>
+						<label for="cmbMandante" >Mandante</label>
+						<select id="cmbMandante" name="cmbMandante" class="selectBox" onchange="changeSelect(this)">
+							<option value="0">Seleziona Mandante</option>
+						</select>
+					</div>
+
+					<div id="divRicercaCliente" name="divRicercaCliente" class="row has-float-label w100-150p marg5Top">
+						<input id="txtRicercaCliente" name="txtRicercaCliente" type="text" placeholder="Ricerca Cliente" onkeyup="txtRicercaChange(this,'txtRicercaCliente','elencoClienti','',2);">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaCliente'); input.value = ''; input.focus(); txtRicercaChange(input,'txtRicercaCliente','elencoClienti','',2);"></span>
+						<label id="lblRicerca" for="txtRicercaCliente" >Ricerca Cliente</label>
+					</div>
+
+					<div id="divAperti" class="row h30p w150p marg10Top">
+						<input id="chkAperti" name="chkAperti" type="checkbox" class="w30p h30p" onclick="chkApertiClick(this);">
+						<label for="chkAperti" class="intestazione posTop-5p clrTestoNero">Saldo > 0</label>
+					</div>
+                    
+				</div>
+			</div>
+	
+			<div id="divCorpo" class="w100 marg5Sx posBottomA60p posTopA122p">			
+				<ul id="elencoClienti" name="elencoClienti" class="w100 elencoR3 posTopA5p posBottomA5p" onscroll="elencoClientiScroll(this,'ListaClienti.html','txtRicercaCliente')">
+					
+				</ul>
+			</div>
+			
+			<div id="divPiede" class="posBottomA w100">
+				<div id="cmdBottom" class="w100 h65p">
+					<div class="pulsantieraDescrizione">
+						<a id="cmdNuovoCliente" href="nuovoCliente.html" class="w20 h65p" title="Nuovo Cliente">
+                            <img src="img/bianche/add.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"  />
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Nuovo
+                            </div>
+                        </a>
+                        <a id="filtroRicercaPivaCf" href="#" class="w20 h65p hide" title="Filtro Piva/CF" onclick="ricercaPivaCf(this)">
+                            <img src="img/bianche/checkVuoto.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"  />
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Piva/Cf
+                            </div>
+                        </a>
+						<label for="nav-toggleL" href="#" class="w20 h65p" id="cmdLocalita" title="Filtro Località">
+                            <img src="img/bianche/place.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Località
+                            </div>
+                        </label>
+						<label for="nav-toggleP" href="#" class="w20 h65p" id="cmdProv" title="Filtro Provincia">
+                            <img src="img/bianche/brazil.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Provincia
+                            </div>
+                        </label>
+						<label for="nav-toggleZ" href="#" class="w20 h65p" id="cmdZona" title="Filtro Zona">
+                            <img src="img/bianche/section.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Zona
+                            </div>
+                        </label>
+						<label for="nav-toggleF" href="#" class="w20 h65p" id="cmdFamiglia" title="Filtro Famiglia">
+                            <img src="img/bianche/famiglia.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Famiglia
+                            </div>
+                        </label>
+						<label for="nav-toggleA" href="#" class="w20 h65p hide" id="cmdAgente" title="Filtro Agente">
+                            <img src="img/bianche/agente.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Agente
+                            </div>
+                        </label>
+                        <label href="#" class="w20 h65p hide tastieraModElectron" id="cmdKeyboard" title="Keyboard" onclick="apriTastiraModElectron();">
+                            <img src="img/bianche/key.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Tastiera
+                            </div>
+                        </label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/ListaClienti.js"></script>
+    </body>	
+</html>

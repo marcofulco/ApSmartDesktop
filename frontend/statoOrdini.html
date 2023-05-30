@@ -1,0 +1,275 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Stato Ordini">
+				
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Stato Ordini</title>
+		<link href="css/style.css?ver=4.2" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=4.1"></script>
+		<script src="componenti/elementiListaClientiFiltro.js"></script>
+		<script src="componenti/elementiFiltriSceltaMultipla.js"></script>
+		<script src="componenti/elementiOrdinamento.js"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="row w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" onclick="clickBack()" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>
+	
+				<div id="tabLink" name="tabLink" class="row tablink-content w100 centraVerticalmente">
+					<button class="tablinkColonne intestazione w30 testoTroncato1" id="tabAperti" onclick="tabClick(this)">DA EVADERE</button>
+					<button class="tablinkColonne intestazione w25 testoTroncato1" id="tabParzChiusi" onclick="tabClick(this)">PARZ.EVASI</button>
+					<button class="tablinkColonne intestazione w20 testoTroncato1" id="tabChiusi" onclick="tabClick(this)">EVASI</button>
+					<button class="tablinkColonne intestazione w25 testoTroncato1" id="tabPreordini" onclick="tabClick(this)">PREORDINI</button>
+                    <button class="tablinkColonne intestazione w25 testoTroncato1" id="tabDaCompletare" onclick="tabClick(this)">DA COMPLETARE</button>
+				</div>
+	
+				<div class="row w100 marg5Top">
+					<div class="row datePikerContainer">
+						<div id="divDataDa" name="divDataDa" class="has-float-label datePiker">
+							<input id="txtDataDa" name="txtDataDa" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataDa" >da Data</label>
+						</div>
+					</div>
+					
+					<div class="row datePikerContainer">
+						<div id="divDataA" name="divDataA" class="has-float-label datePiker">
+							<input id="txtDataA" name="txtDataA" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataA" >a Data</label>
+						</div>
+					</div>
+
+					<div id="cmdAggiorna" class="row pulsantiNoSfondo">
+						<a href="#" title="Aggiorna Dati" onclick="avviaCarStoricoOrdini();"><img class="w30p" src="img/Nere/refresh.svg"></a>
+					</div>
+				</div>
+	
+				<div id="intestazioneGriglia" class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle">
+					
+				</div>
+			</div>
+
+			<div id="divCorpo" class="posTopA213p posBottomA110p padSx5 w100-10p">	
+				<ul id="elencoEC" name="elencoEC" class="ulElenco posTopA5p posBottomA5p elencoR2 w100 elencoBase" onscroll="elencoECScroll(this,'ListaClienti.html')">
+					
+				</ul> 
+			</div>
+	
+			<div id="divPiede" class="posBottomA w100">
+				<div id="rigaPiede" class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle totaliPiccoli marg5Bottom padBot5">
+
+				</div>
+					<div class="pulsantieraDescrizione" id="pulsantiera">
+						<label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" class="w25 h65p" title="Filtri">
+                            <img src="img/bianche/filter.svg" />
+                            <div class="testoTroncato1 normale testoPulsantiera">
+                                Filtri
+                            </div>
+                        </label>
+						<label id="cmdOrdinamento" name="cmdOrdinamento" for="nav-toggleL" class="w25 h65p" title="Ordinamento">
+                            <img src="img/bianche/sort.svg" />
+                            <div  class="testoTroncato1 normale testoPulsantiera"> 
+                                Ordinamento
+                            </div>
+                        </label>
+                        <label id="cmdFoglioDiCarico" name="cmdFoglioDiCarico" class="w25 h65p hide" title="Ordinamento" onclick="openModalFoglioCarico()">
+                            <img src="img/bianche/foglioCarico.svg" />
+                            <div  class="testoTroncato1 normale testoPulsantiera"> 
+                                Foglio di carico
+                            </div>
+                            <div id="contatorePallets" style="position: absolute;top: 5px;right: 5;background-color: rgb(255 0 0 / 46%);border-radius: 10px;" class="hide">
+                                
+                            </div>
+                        </label>
+						<label id="cmdPdf" name="cmdPdf" for="nav-toggleP" class="w25 h65p" title="Genera PDF">
+                            <img src="img/bianche/pdf.svg" />
+                            <div  class="testoTroncato1 normale testoPulsantiera"> 
+                                Stampa
+                            </div>
+                        </label>
+					</div>
+				
+			</div>
+		</div>
+
+		<input type="checkbox" id="nav-toggleL" hidden>
+        <nav id="navL" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="row navTesta w100">
+				<div class="row fasciaIntestazione">
+					<h3 class="">Modifica Ordinamento</h3> 
+				</div>
+			</div>
+
+			<div class="posTopA52p posBottomA60p navCorpo w100">
+				<ul id="elencoOrdinamento" name="elencoOrdinamento" class="posTopA posBottomA5p elencoR1 w100">
+					
+				</ul>
+			</div>
+
+			<div class="posBottomA5p navPiede w100 intestazione clrScuro h60p">
+				<div id="lblOrdinamento" class="row w100-60p marg5Top testoTroncato h60p cel"></div>
+				<div class="rowDx w60p clrSfumatoScuro" onclick="cambiaOrdinamento()">
+					<img class="imgPiccola50 marg10Sx marg10Dx marg5Top" src="img/bianche/ok.svg" alt="">
+				</div>
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleF" hidden>
+        <nav id="navF" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="navTesta w100 posTopA5p">
+				<div id="tabLink" name="tabLink" class="tablink-content">
+					<button class="tablink intestazione" id="tabCliente" onclick="openPage('Cliente', this)">Cliente</button>
+					<button class="tablink intestazione" id="tabAgente" onclick="openPage('Agente', this)">Agente</button>
+					<button class="tablink intestazione" id="tabStatoOrdine" onclick="openPage('StatoOrdine', this)">Stato</button>
+					<button class="tablink intestazione" id="tabNumero" onclick="openPage('Numero', this)">Altro</button>
+				</div>
+			</div>
+			
+			<div class="navCorpo w100 posTopA58p posBottomA">
+				<div hMeno="165" id="Cliente" name="Cliente" class="tabcontent w100 posTopA posBottomA">	
+					<div id="divRicercaCliente" name="divRicercaCliente" class="row has-float-label w100">
+						<input id="txtRicercaCliente" name="txtRicercaCliente" type="text" placeholder="Ricerca Cliente ..." onkeyup="txtRicercaChange(this,'txtRicercaCliente','elencoClienti','',2);">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaCliente'); input.value = ''; input.focus(); txtRicercaChange(input,'txtRicercaCliente','elencoClienti','',2);"></span>
+						<label for="txtRicercaCliente" >Ricerca Cliente ...</label>
+					</div>
+	
+					<ul id="elencoCliente" name="elencoCliente" class="ulNavElenco elencoR3 w100 posTopA52p posBottomA100p" onscroll="elencoClientiScroll(this)">
+						
+					</ul>
+
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroCliente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroCliente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p marg10Dx posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="165" id="Agente" name="Agente" class="tabcontent w100 posTopA posBottomA">
+					<div id="divRicercaAgente" name="divRicercaAgente" class="has-float-label w100">
+						<input id="txtRicercaAgente" name="txtRicercaAgente" type="text" placeholder="Ricerca Agente ..." onkeyup="ricercaSuHtml('txtRicercaAgente','elencoAgente');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaAgente'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaAgente','elencoAgente');"></span>
+						<label for="txtRicercaAgente" >Ricerca Agente ...</label>
+					</div>
+		
+					<ul id="elencoAgente" name="elencoAgente" class="elencoR1 w100 posTopA52p posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroAgente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroAgente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p marg10Dx posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="100" id="StatoOrdine" name="StatoOrdine" class="tabcontent w100 posTopA posBottomA">
+					<!-- <div id="divRicercaStatoOrdine" name="divRicercaStatoOrdine" class="has-float-label w100">
+						<input id="txtRicercaStatoOrdine" name="txtRicercaStatoOrdine" type="text" placeholder="Ricerca Stato Ordine ..." onkeyup="ricercaSuHtml('txtRicercaStatoOrdine','elencoStatoOrdine');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaStatoOrdine'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaStatoOrdine','elencoStatoOrdine');"></span>
+						<label for="txtRicercaStatoOrdine" >Ricerca Stato Ordine ...</label>
+					</div> -->
+		
+					<ul id="elencoStatoOrdine" name="elencoStatoOrdine" class="elencoR1 w100 posTopA posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<label for="nav-toggleF" href="#" class="rowDx posBottomA marg10Dx h50p w50p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+	
+				<div id="Numero" name="Numero" class="tabcontent w100 posTopA posBottomA">	
+					<div id="divRicercaNumeroDa" name="divRicercaNumeroDa" class="row has-float-label w60">
+						<input id="txtRicercaNumeroDa" name="txtRicercaNumeroDa" type="number" placeholder="Numero Da ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaNumeroDa'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaNumeroDa" >Numero Da ...</label>
+					</div>
+					<div id="divRicercaSerieDa" name="divRicercaSerieDa" class="row has-float-label w40">
+						<input id="txtRicercaSerieDa" name="txtRicercaSerieDa" type="text" placeholder="Serie Da ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaSerieDa'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaSerieDa" >Serie Da ...</label>
+					</div>
+	
+					<div id="divRicercaNumeroA" name="divRicercaNumeroA" class="row has-float-label w60">
+						<input id="txtRicercaNumeroA" name="txtRicercaNumeroA" type="number" placeholder="Numero A ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaNumeroA'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaNumeroA" >Numero A ...</label>
+					</div>
+					<div id="divRicercaSerieA" name="divRicercaSerieA" class="row has-float-label w40">
+						<input id="txtRicercaSerieA" name="txtRicercaSerieA" type="text" placeholder="Serie A ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaSerieA'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaSerieA" >Serie A ...</label>
+					</div>
+                    <div id="divRicercaArticoloVenditaBanco" name="divRicercaArticoloVenditaBanco" class="row has-float-label w180p marg5Top marg5Sx">
+						<input id="ricercaArticoloVenditaBanco" name="ricercaArticoloVenditaBanco" type="text" placeholder="Ricerca Prodotto.." onkeypress="attivaRicercaComboScomparsa(this,'articoliVeBa','ulArticoliCodice')" filtro="DESCRIZIONE_' '_A.CODICE" onfocusin="attivaRicercaComboScomparsa(this,'articoliVeBa','ulArticoliCodice')" onblur="comboScomparsaChiudi(this)" onkeydown="if (event.keyCode == 9 || event.keyCode==13){cercaCodiceVeBa(this)}" fncenter="cercaCodiceVeBa(document.getElementById('ricercaArticoloVenditaBanco'))" autocomplete="off">
+	
+						<span class="deleteicon" onclick="var input = getElementById('ricercaArticoloVenditaBanco'); input.value = ''; input.focus(); avviaCarStoricoOrdini();"></span>
+						<label id="lblRicerca" for="ricercaArticoloVenditaBanco">Ricerca Prodotto..</label>
+						<ul id="ulArticoliCodice" campo="CODICE" name="ulArticoliCodice" class="comboScomparsa elencoR1 testoNormale w350p" onscroll="comboScomparsaScroll(this,'articoliVeBa','ulArticoliCodice','txtRicercaCodice')" onfocus="nonChiudereComboScomparsa=true;" onblur="nonChiudereComboScomparsa=false;" style="display: none;">
+	
+						</ul>
+					</div>
+					<div id="divDeposito" name="divDeposito" class="row has-float-label marg5Sx marg5Top w170p">
+						<span class="selectDefault" id="0">Sel. Deposito</span>
+						<label for="cmbDeposito">Deposito</label>
+						<select id="cmbDeposito" name="cmbDeposito" class="selectBox" onchange="changeSelect(this)">
+							<option value="0">Sel. Deposito</option>
+						</select>
+					</div>
+                    					
+                    <div id="divRicercaPerDataConsegna" name="divRicercaPerDataConsegna" class="row has-float-label w180p marg5Top marg5Sx">
+						<input id="txtRicercaDataConsegna" name="txtRicercaDataConsegna" type="date" placeholder="Data consegna" onkeyup="listaDaNumero()">
+						<label for="txtRicercaDataConsegna" >Data consegna</label>
+					</div>
+					<div class="row w100">
+						<label for="nav-toggleF" href="#" class="rowDx posBottom5p marg5Top marg10Dx h50p w50p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<script src="js/statoOrdini.js?ver=1.2"></script>
+    </body>
+</html>

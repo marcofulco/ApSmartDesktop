@@ -1,0 +1,84 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		
+		<meta charset="utf-8">
+		
+		<meta name="description" content="Login">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Login</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js"></script>
+		<script src="componenti/elementiElencoServer.js"></script>
+	</head>
+	<body class="clrSfondoAP">
+		<!-- Modal Box Elenco Server -->
+        <div id="myStorico" class="modalElenco clrSfumatoChiaro">
+				<span class="close" onclick="chiudiModalBox('',location.reload());">&times;</span>
+				<div class="clrBase h50p cel"></div>
+				<div id="caption" class="marg10Bottom marg10Top intestazioneGriglie testoTroncato h30p"></div>
+				<!--<div class="row intestazioneGriglie w100 h10p padTop10 tableStyle">
+					<div class="row w100 cx intestazione"></div>
+				</div>-->
+				<ul id="elencoServer" name="elencoServer" class="elencoR2 marg5Sx marg5Top w100-10p posTopA100p posBottomA5p">
+					
+				</ul>
+		</div>
+		
+		<div class="posTop posLeft posBottom posRight">
+            <img name="logoPiccolo" id="logoPiccolo" class="" src="" alt="">
+			
+			<div class="posCentro clrBase col3" style="border-radius: 20px;">
+				<div class="row fasciaIntestazione" style="border-radius: 10px 10px 0px 0px;">
+					<h3 class="cx">ACCESSO</h3>
+				</div>
+				
+				<form class="marg5Sx marg5Dx" id="pwdLost" action="#" method="POST">
+					<div class="h40p row w100"></div>
+	
+					<div class="has-float-label w100 marg10Bottom">
+						<input id="txtUserName" name="txtUserName" type="text" class="w100" placeholder="Nome Utente">
+						<label for="txtUserName" >Nome Utente</label>
+					</div>
+					
+					<div id="divPwd" class="has-float-label w100 marg10Bottom">
+						<input id="txtPassword" name="txtPassword" type="password" class="w100" placeholder="Password">
+						<span class="deleteicon" onclick="var input = getElementById('txtPassword'); input.value = ''; input.focus();"></span>
+						<label for="txtPassword" >Password</label>
+					</div>
+	
+					<div id="divMemoPwd" class="w100 row h40p marg10Bottom">
+						<input id="chkPassword" name="chkPassword" type="checkbox" class="toggle-button">
+						<label id="lblMemoPwd" for="chkPassword" class="intestazione marg5Sx">Memorizza Password</label>
+					</div>
+					<div id="divOffLine" class="w100 row h40p marg10Bottom hide">
+						<input id="chkOffLine" name="chkOffLine" type="checkbox" class="toggle-button" onclick="attivaDisattivaModalitaOffLine(this,false,mostraNascondiXOffLine);">
+						<label id="lblOffLine" for="chkOffLine" class="intestazione marg5Sx">Login off Line</label>
+					</div>
+
+					<div class="h20p row w100"></div>
+					<button id="btReCaptcha" class="row w40 clrTestoBianco pulsante marg10Bottom g-recaptcha" data-sitekey="6LctkVcaAAAAAOhsVgjdptOESc5zFfBDxpbzescy" data-callback="onSubmit">Login</button>
+					<a id="btNoCaptcha" href="#" class="rowDx w40 clrTestoBianco pulsante marg10Bottom hide" onclick="login()">Login</a>
+					<div class="h40p row w100"></div>
+					<a href="#" class="posBottomA10p testoNormale posLeftA5p testo12 testoSottolineato w100" onclick="passwordDimenticata();"> ho dimenticato la password</a>
+					<!-- <a id="cmdRegistrati" href="#" class="posBottomA30p testoNormale posLeftA5p testo12 testoSottolineato w100" onclick="registrati();">Nuovo Utente? Registrati ...</a> -->
+				</form>
+			</div>
+		</div>
+
+		<script src="js/login.js?ver=1.3"></script>
+    </body>
+</html>

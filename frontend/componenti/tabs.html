@@ -1,0 +1,101 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="description" content="Presa Ordini">
+		<!--<meta http-equiv="refresh" content="5;URL=http://www.google.it">-->
+		<!--<meta name="robots" content="all|none/ index | index /follow|no follow|no>-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--<link href="css/style.css" rel="stylesheet" type="text/css">-->
+        
+        <title>Accordion</title>
+
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0px;
+                font-family: Arial;
+            }
+
+            .tablink{
+                background-color: #555;
+                color: white;
+                float: left;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 14px 16px;
+                font-size: 17px;
+                width: 25%;
+            }
+
+            .tablink:hover {
+                background-color: #777;
+            }
+
+            .tabcontent {
+                color: white;
+                display: none;
+                padding: 100px 20px;
+                height: 100%;
+            }
+
+            #Home {background-color: red;}
+            #News {background-color: green;}
+            #Contact {background-color: blue;}
+            #About {background-color: orange;}
+        </style>
+    </head>
+    
+    <body>
+        <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
+        <button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
+        <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+        <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+
+        <div id="Home" class="tabcontent">
+            <h3>Home</h3>
+            <p>Home is where the heart is ...</p>
+        </div>
+        <div id="News" class="tabcontent">
+            <h3>News</h3>
+            <p>Some News this fine days ...</p>
+        </div>
+        <div id="Contact" class="tabcontent">
+            <h3>Contact</h3>
+            <p>Get in touch, or swing by for a cop of coffee ...</p>
+        </div>
+        <div id="About" class="tabcontent">
+            <h3>About</h3>
+            <p>Who we are ad what we do ...</p>
+        </div>
+
+        <script>
+            function openPage(pageName, elmnt, color){
+                //Nascondo tutti gli elementi con class="tabcontent"
+                var i, tabcontent, tablinks;
+                tabcontent=document.getElementsByClassName("tabcontent");
+                for (i=0; i<tabcontent.length; i++){
+                    tabcontent[i].style.display="none";
+                }
+
+                //Rimuovo il colore di background
+                tablinks=document.getElementsByClassName("tablink");
+                for (i=0; i<tablinks.length; i++){
+                    tablinks[i].style.backgroundColor="";
+                }
+
+                //Visualizzo il tab specifico
+                document.getElementById(pageName).style.display="block";
+
+                //Aggiungo uno specifico colore al pulsante usato per aprire il contenuto
+                elmnt.style.backgroundColor = color;
+            }
+
+            document.getElementById("defaultOpen").click();
+        </script>
+    </body>
+</html>

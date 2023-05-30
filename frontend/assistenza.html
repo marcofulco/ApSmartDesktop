@@ -1,0 +1,259 @@
+<html lang="it">
+
+<head>
+    <meta name="viewport"
+        content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+    <meta name="description" content="Scheda Anagrafica">
+
+    <link rel="apple-touch-icon" href="img/icona152.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="application-name" content="Presa Ordini" />
+    <meta name="msapplication-TileImage" content="img/icona144.png">
+    <meta name="msapplication-TileColor" content="#4B7A46">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4B7A46" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <title id="titleList">Liste Assistenza</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="config/config.js"></script>
+    <script src="js/script.js?ver=3.0"></script>
+    <script src="componenti/elementiFiltriSceltaMultipla.js"></script>
+</head>
+
+<body>
+    <div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+        <div id="divTesta" class="posTopA w100">
+            <div id="divTestaSuperiore" class="row w100 clrBase h60p textureLogo">
+                <div class="row w10">
+                    <div class="w60p">
+                        <a href="#" onclick="clickBack()"><img class="imgPiccola w60p" src="img/bianche/back.svg" /></a>
+                    </div>
+                </div>
+
+                <div class="row intCent padSx10">
+                    <img id="logoIntestazione" class="logoOrizzontale"
+                        src="img/aziendapratica/aziendapratica-bianco.svg"
+                        onclick="goMainPage()" />
+                </div>
+
+                <label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+            </div>
+
+        </div>
+        <div class="w100 posTopA60p" id="divPulsantiGrafici">
+            <div id="tabLink" name="tabLink" class="tablink-content">
+                <button class="tablinkColonne intestazione testoTroncato1 tabLinkSelezionato w33" id="tabTestata"
+                    onclick="tabClick(this)">Testata</button>
+                <button class="tablinkColonne intestazione testoTroncato1 w33" id="tabMateriale"
+                    onclick="tabClick(this)">Materiale</button>
+                <button class="tablinkColonne intestazione testoTroncato1 w34" id="tabAssistenza"
+                    onclick="tabClick(this)">Lavorazione</button>
+            </div>
+        </div>
+        <div id="divCorpo" class="w100 posBottomA65p posTopA115p">
+            <div id="divCorpoTestata" class="h100 w100 scrollY-Auto">
+                <div class="w100">
+                    <div id="divRicercaCliente" name="divRicercaCliente" class="has-float-label col6 row">
+                        <input id="txtRagioneSociale" name="txtRagioneSociale" type="text" placeholder="Ricerca cliente"
+                            onfocus="modalRicercaCliente('txtRagioneSociale','ricercaContrattoCliente()')">
+                        <span class="deleteicon"
+                            onclick="var input = getElementById('txtRagioneSociale'); input.value = ''; input.setAttribute('idragionesociale','')"></span>
+                        <label id="lblRicerca" for="txtRagioneSociale">Ragione sociale</label>
+                    </div>
+                    <div class="has-float-label col3 row">
+                        <input id="txtNumero" type="text" class="w100-10p" placeholder="Note"
+                        disabled>
+                        <label for="txtNumero">Numero</label>
+                    </div>
+                    <div class="has-float-label col3 row">
+                        <input id="txtSerie" type="text" class="w100-10p" placeholder="Note"
+                            disabled>
+                        <label for="txtSerie">Serie</label>
+                    </div>
+                </div>
+                <br>
+                <div class="has-float-label col12 row w100 ">
+                    <input id="txtDescrizione" type="text" class="w100-10p" placeholder="Descrizione" onkeypress="resetErrore(this)">
+                    <label for="txtDescrizione">Descrizione</label>
+                </div>
+                <br>
+                <div class="has-float-label col12 row h120p w100 ">
+                    <textarea id="txtDifetto" type="text" class="w100-10p h120p" placeholder="Problema segnalato"
+                        onkeypress="resetErrore(this)"></textarea>
+                    <label for="txtDifetto">Problema Segnalato</label>
+                </div>
+                <br>
+                <div class="has-float-label row w100 h60p col12 ">
+                    <input id="txtNote" type="text" class="w100-10p" placeholder="Note" onkeypress="resetErrore(this)">
+                    <label for="txtNote">Note</label>
+                </div>
+                <br>
+                <div class="w100 col12 h60p">
+                    <div class="w65 row">
+                        <div class="has-float-label w100 ">
+                            <input id="txtData" type="date" class="w100-10p" placeholder="Data appuntamento"
+                                onkeypress="resetErrore(this)">
+                            <label for="txtData">Data Appuntamento</label>
+                        </div>
+                    </div>
+                    <div class="w30 row">
+                        <div class="has-float-label w100 ">
+                            <input id="txtOraApp" type="time" class="w100-10p" placeholder="Ora"
+                                onkeypress="resetErrore(this)">
+                            <label for="txtOraApp">Ora</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                <div id="divcmbTipoAssistenza" name="divRegione" class="has-float-label w50 row">
+                    <span class="selectDefault" id="0">Tipo assistenza</span>
+                    <label for="cmbTipoAssistenza">Tipo assistenza</label>
+                    <select id="cmbTipoAssistenza" name="cmbTipoAssistenza" class="selectBox"
+                        onchange="changeSelect(this)" placeholder="Regione">
+                        <option value="0">Intervento Interno</option>
+                        <option value="1">Intervento Esterno</option>
+                        <option value="2">Teleassistenza</option>
+                    </select>
+                </div>
+                
+                <div id="divelencoUtenti" name="divRegione" class="has-float-label w50 row">
+                    <span class="selectDefault" id="0">Tecnico</span>
+                    <label for="elencoUtenti">Tecnico</label>
+                    <select id="elencoUtenti" name="elencoUtenti" class="selectBox" onchange="changeSelect(this)"
+                        placeholder="Regione">
+                        <option value="">Seleziona Tecnico</option>
+
+                    </select>
+                </div>
+                </div>
+                
+                <div id="divcontrattiClienteAssistenza" name="divRegione" class="has-float-label w250p">
+                    <span class="selectDefault" id="0">Contratti</span>
+                    <label for="contrattiClienteAssistenza">Contratti</label>
+                    <select id="contrattiClienteAssistenza" name="contrattiClienteAssistenza" class="selectBox"
+                        onchange="changeSelect(this);cambiaTipoIntervento(this)" placeholder="Contratti">
+                    </select>
+                </div>
+            </div>
+            <div id="divCorpoMateriale" class="h100 hide w100 scrollY-Auto">
+                <div class="row w100 marg5Top">
+                    <div id="divRicercaCodice" name="divRicercaCodice" class="row has-float-label w100-80p">
+                        <input id="codiceArticolo" name="codiceArticolo" type="text" placeholder="Ricerca Prodotto.."
+                            onkeypress="attivaRicercaComboScomparsa(this,'articoliVeBa','ulArticoliCodice')"
+                            filtro="DESCRIZIONE_' '_A.CODICE"
+                            onfocusin="attivaRicercaComboScomparsa(this,'articoliVeBa','ulArticoliCodice')"
+                            onkeydown="if (event.keyCode == 9 || event.keyCode==13){cercaCodice(this);comboScomparsaChiudi(this);}"
+                            autocomplete="off" class="inputRicercaArticolo">
+
+                        <span class="deleteicon" onclick="document.getElementById('codiceArticolo').value='';"></span>
+                        <label id="lblRicerca" for="codiceArticolo">Ricerca Prodotto..</label>
+                        <ul id="ulArticoliCodice" campo="CODICE" name="ulArticoliCodice"
+                            class="comboScomparsa elencoR1 testoNormale"
+                            onscroll="comboScomparsaScroll(this,'articoliVeBa','ulArticoliCodice','txtRicercaCodice')"
+                            onfocus="nonChiudereComboScomparsa=true;" onblur="nonChiudereComboScomparsa=false;">
+
+                        </ul>
+                    </div>
+                    <button id="cmdBarCode" class="row w40p h42p pulsante clrTestoBianco padSx5 btnCustom"
+                        title="Avvia Lettore BarCode" onclick="apriLettoreBarCode('codiceArticolo')">
+                        <img class="row w30p posTopA" src="img/bianche/barcode.svg">
+                    </button>
+                    <button id="cmdBarCode" class="row w40p h42p pulsante clrTestoBianco padSx5 btnCustom"
+                        title="Ricera Articolo" onclick="apriModalRicercaArticoli('codiceArticolo')">
+                        <img class="row w30p posTopA" src="img/bianche/search.svg">
+                    </button>
+                </div>
+                <div id="divelencoMateriale" class="posBottomA posTopA60p w100">
+                    <ul id="elencoMateriale" name="elencoMateriale" class="elencoRubrica  w100 scrool h100"
+                        onscroll="">
+
+                    </ul>
+                </div>
+                <div class="clrScuro posBottomA h30p w100 selectDefault centraVerticalmente">
+                    <div class="w100-150p row dx">Totale Materiale</div>
+                    <div class="w100p cx" id="totaleMaterialeDivMateriale"></div>
+                </div>
+            </div>
+            <div id="divCorpoLavorazione" class="h100 hide W100 scrollY-Auto">
+                <div class="w100 h60p">
+                    <div id="divcontrattiClienteAssistenza" name="divRegione" class="has-float-label w100-250p row">
+                        <span class="selectDefault" id="0">Tipo Intervento</span>
+                        <label for="cmbTipoIntervento">Tipo Intervento</label>
+                        <select id="cmbTipoIntervento" name="cmbTipoIntervento" class="selectBox"
+                            onchange="changeSelect(this)" placeholder="Tipo Intervento">
+                            <option value="Intervento Fuori Contratto">Intervento Fuori Contratto</option>
+                            <option value="Intervento Con Contratto">Intervento Con Contratto</option>
+                        </select>
+                    </div>
+                    <div class="row w250p">
+                        <div class="row h30p w100 marg5Bottom">
+                            <label for="chkUltimato" id="lblchkUltimato" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span class="testo20 testoNero">Ultimato</span>
+									<input id="chkUltimato" name="chkUltimato" descrizione="Ultimato" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="">
+								</div>
+							</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="has-float-label col12 ">
+                    <textarea id="txtAssistenza" type="text" class="w100-10p h120p" placeholder="Lavoro eseguito"
+                        onkeypress="resetErrore(this)"></textarea>
+                    <label for="txtAssistenza">Lavoro eseguito</label>
+                </div>
+                <div id="divElencoDataOrario" class="posBottomA65p posTopA w100" style="top:185px!important;">
+                    <div class="row w100 centraElemento pulsantieraPiccola">
+                        <button id="cmdNuovoMenu" href="#" class="w100 pulsanteVeba" title="Nuovo range orario"
+                            onclick="formInserimentoRangeDataOra()"><img src="img/bianche/add.svg"></button>
+                    </div>
+                    <ul id="elencoRangeDataOra" class="elencoRubrica  w100 scrool h100">
+
+                    </ul>
+                </div>
+                <div class="clrScuro posBottomA w100 selectDefault ">
+                    <div class="w100 h30p centraVerticalmente">
+                        <div class="w100-150p row dx">Totale Manodopera</div>
+                        <div class="w100p cx" id="strTotManodopera"></div>
+                    </div>
+                    <div class="w100 h30p centraVerticalmente">
+                        <div class="w100-150p row dx">Totale Materiale</div>
+                        <div class="w100p cx" id="strMateriale"></div>
+                    </div>
+                    <div class="w100 h30p centraVerticalmente">
+                        <div class="w100-150p row dx">Totale Imponibile</div>
+                        <div class="w100p cx" id="strImponibile"></div>
+                    </div>
+                    <div class="w100 h30p centraVerticalmente">
+                        <div class="w100-150p row dx">Totale Ivato</div>
+                        <div class="w100p cx" id="strTotPagare"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="divPiede" class="posBottomA w100">
+            <div id="pulsantieraPiede" class="pulsantieraDescrizione">
+                <label id="btnNuovaAssistenza" name="btnNuovaAssistenza" href="#" class="w100 h65p" title="Salva"
+                    onclick="salva()">
+                    <img src="img/bianche/save.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;">
+                    <div class="testoTroncato1 normale testoPulsantiera">
+                        Salva
+                    </div>
+                </label>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="js/listeAssistenze.js"></script>
+    <script src="js/multiDocumento.js"></script>
+</body>
+
+</html>

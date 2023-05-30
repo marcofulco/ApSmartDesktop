@@ -1,0 +1,241 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Movimenti Periodici">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Lista Incassi</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+		<script src="componenti/elementiIncassiPeriodici.js"></script>
+		<script src="componenti/elementiListaClientiFiltro.js"></script>
+		<script src="componenti/elementiFiltriSceltaMultipla.js"></script>
+		<script src="componenti/elementiOrdinamento.js"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" onclick="clickBack()" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>	
+
+				<div class="row fasciaIntestazione">
+					<h3 id="lblIntestazione" name="lblIntestazione" class="testoTroncato1 cx">LISTA INCASSI</h3> 
+				</div>
+				
+				<div class="row w100 marg5Top">
+					<div class="row datePikerContainer">
+						<div id="divDataDa" name="divDataDa" class="has-float-label datePiker">
+							<input id="txtDataDa" name="txtDataDa" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataDa" >da Data Creazione</label>
+						</div>
+					</div>
+					
+					<div class="row datePikerContainer">
+						<div id="divDataA" name="divDataA" class="has-float-label datePiker">
+							<input id="txtDataA" name="txtDataA" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataA" >a Data Creazione</label>
+						</div>
+					</div>
+
+					<div id="divChkManoAgente" class="row h40p marg5Top">
+						<input id="chkManoAgente" name="chkManoAgente" type="checkbox" class="toggle-button" onclick="chkClick(this)">
+						<label for="chkManoAgente" class="intestazione clrTestoNero">Mano Agente</label>
+					</div>
+				</div>
+
+				<div class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle">
+					<div class="row w50-25p hGrande cx">Descrizione</div>
+					<div class="row w15 hPiccolo cx">Data Creazione</div>
+					<div class="row w15 hPiccolo cx">Data</div>
+					<div class="row w40-25p hPiccolo cx">Conto</div>
+					<div class="row w15 hPiccolo cx">Importo</div>
+					<div class="row w15 hPiccolo cx">Abbuono</div>
+					<div class="row w25 hGrande cx">Importo</div>
+					<div class="row w25 hGrande cx">Abbuono</div>
+				</div>
+			</div>
+			
+			<div id="divCorpo" class="posTopAFlexInc posBottomA120p padSx5 w100-10p">
+				<ul id="elencoEC" name="elencoEC" class="ulElenco posTopA5p posBottomA5p elencoR2 w100 elencoBase" onscroll="elencoECScroll(this,'ListaClienti.html')">
+					
+				</ul>
+			</div>
+
+			<div id="divPiede" class="posBottomA w100">
+				<div class="row intestazioneGriglie clrScuro w100 h45p padTop10 tableStyle">
+					<div class="row hGrande dx" style="width: calc(48% - 10px);">Tot. per <span id="nrP"></span></div>
+					<div class="row hPiccolo dx" style="width: 68.7%;">Totali per <span id="nr"></span></div>
+					<div id="importo" class="row w15 hPiccolo dx">0,00</div>
+					<div id="importoG" class="row w25 hGrande dx">0,00</div>
+					<div id="abbuono" class="row w15 hPiccolo dx">0,00</div>
+					<div id="abbuonoG" class="row w25 hGrande dx">0,00</div>
+					<div class="row w100 marg5Top">
+						<div id="contanti" class="row w25 cx testoTroncato1">€ 0,00</div>
+						<div id="assegni" class="row w25 cx testoTroncato1">a/b 0,00</div>
+						<div id="scadenza" class="row w25 cx testoTroncato1">scad 0,00</div>
+						<div id="altro" class="row w25 cx testoTroncato1">altro 0,00</div>
+					</div>
+				</div>
+
+				<div id="cmdBottom" class="row w100 h60p">
+					<div class="pulsantiera">
+						<label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" href="#" class="w33" title="Filtro Prodotti"><img src="img/bianche/filter.svg" /></label>
+						<label id="cmdOrdinamento" name="cmdOrdinamento" for="nav-toggleL" class="w33" title="Ordinamento"><img src="img/bianche/sort.svg" /></label>
+						<label id="cmdPdf" name="cmdPdf" for="nav-toggleP" class="w34" title="Genera PDF" onclick="avviaCarDettagliDocumenti(true,'report')"><img src="img/bianche/pdf.svg" /></label>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<input type="checkbox" id="nav-toggleL" hidden>
+        <nav id="navL" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="row navTesta w100">
+				<div class="row fasciaIntestazione">
+					<h3 class="">Modifica Ordinamento</h3> 
+				</div>
+			</div>
+
+			<div class="posTopA52p posBottomA60p navCorpo w100">
+				<ul id="elencoOrdinamento" name="elencoOrdinamento" class="posTopA posBottomA5p elencoR1 w100">
+					
+				</ul>
+			</div>
+
+			<div class="posBottomA5p navPiede w100 intestazione clrScuro h60p">
+				<div id="lblOrdinamento" class="row w100-60p marg5Top testoTroncato h60p cel"></div>
+				<div class="rowDx w60p clrSfumatoScuro" onclick="cambiaOrdinamento()">
+					<img class="imgPiccola50 marg10Sx marg10Dx marg5Top" src="img/bianche/ok.svg" alt="">
+				</div>
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleF" hidden>
+        <nav id="navF" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="navTesta w100 posTopA5p">
+				<div id="tabLink" name="tabLink" class="tablink-content">
+					<button class="tablink intestazione" id="tabCliente" onclick="openPage('Cliente', this)">Cliente</button>
+					<button class="tablink intestazione" id="tabAgente" onclick="openPage('Agente', this)">Agente</button>
+					<button class="tablink intestazione" id="tabTipo" onclick="openPage('Conto', this)">Conto</button>
+					<button class="tablink intestazione" id="tabNumero" onclick="openPage('Altro', this)">Altro</button>
+				</div>
+			</div>
+			
+			<div class="navCorpo w100 posTopA58p posBottomA">
+				<div hMeno="165" id="Cliente" name="Cliente" class="tabcontent w100 posTopA posBottomA">	
+					<div id="divRicercaCliente" name="divRicercaCliente" class="row has-float-label w100">
+						<input id="txtRicercaCliente" name="txtRicercaCliente" type="text" placeholder="Ricerca Cliente ..." onkeyup="txtRicercaChange(this,'txtRicercaCliente','elencoClienti','',2);">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaCliente'); input.value = ''; input.focus(); txtRicercaChange(input,'txtRicercaCliente','elencoClienti','',2);"></span>
+						<label for="txtRicercaCliente" >Ricerca Cliente ...</label>
+					</div>
+	
+					<ul id="elencoCliente" name="elencoCliente" class="ulNavElenco elencoR3 w100 posTopA52p posBottomA100p" onscroll="elencoClientiScroll(this)">
+						
+					</ul>
+
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroCliente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroCliente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="165" id="Agente" name="Agente" class="tabcontent w100 posTopA posBottomA">
+					<div id="divRicercaAgente" name="divRicercaAgente" class="has-float-label w100">
+						<input id="txtRicercaAgente" name="txtRicercaAgente" type="text" placeholder="Ricerca Agente ..." onkeyup="ricercaSuHtml('txtRicercaAgente','elencoAgente');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaAgente'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaAgente','elencoAgente');"></span>
+						<label for="txtRicercaAgente" >Ricerca Agente ...</label>
+					</div>
+		
+					<ul id="elencoAgente" name="elencoAgente" class="elencoR1 w100  posTopA52p posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroAgente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroAgente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="165" id="Conto" name="Conto" class="tabcontent w100 posTopA posBottomA">		
+					<ul id="elencoTipo" name="elencoTipo" class="elencoR1 w100  posTopA posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<label for="nav-toggleF" href="#" class="rowDx h50p w50p posTopA2p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+	
+				<div id="Altro" name="Altro" class="tabcontent w100 posTopA10p posBottomA">	
+					<div class="row datePikerContainer">
+						<div id="divDataIncDa" name="divDataIncDa" class="has-float-label datePiker">
+							<input id="txtDataIncDa" name="txtDataDa" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataIncDa" >da Data</label>
+						</div>
+					</div>
+					
+					<div class="row datePikerContainer">
+						<div id="divDataIncA" name="divDataIncA" class="has-float-label datePiker">
+							<input id="txtDataIncA" name="txtDataIncA" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataIncA" >a Data</label>
+						</div>
+					</div>
+
+					<div class="row w100">
+						<div id="divChkNonAnticipati" class="row h40p marg5Top">
+							<input id="chkNonAnticipati" name="chkNonAnticipati" type="checkbox" class="toggle-button" onclick="chkClick(this)">
+							<label for="chkNonAnticipati" class="intestazione clrTestoNero marg10Dx">Non Anticipati</label>
+						</div>
+	
+						<div id="divChkAnticipati" class="row h40p marg5Top">
+							<input id="chkAnticipati" name="chkNonAnticipati" type="checkbox" class="toggle-button" onclick="chkClick(this)">
+							<label for="chkAnticipati" class="intestazione clrTestoNero">Anticipati</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<script src="js/incassiPeriodici.js"></script>
+    </body>
+</html>

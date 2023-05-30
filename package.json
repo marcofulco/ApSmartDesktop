@@ -1,0 +1,53 @@
+{
+  "name": "apsmart",
+  "version": "1.0.1",
+  "description": "ApSmart Desktop",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder --publish always"
+  },
+  "build": {
+    "appId": "app.apSmart.desktop",
+    "productName": "ApSmart",
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "icon": "icon/iconaAp.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "marcofulco",
+        "repo": "ApSmartDesktop",
+        "releaseType": "release",
+        "private": false,
+        "token": "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"
+      }
+    ]
+  },
+  "author": "Online Snc",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^22.0.0",
+    "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
+    "electron-updater": "^5.3.0"
+  }
+}

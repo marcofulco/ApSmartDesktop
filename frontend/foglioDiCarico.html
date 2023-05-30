@@ -1,0 +1,133 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Fogli di carico">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Fogli di carico" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Fogli di carico</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" onclick="esci()" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>	
+
+				<div class="row fasciaIntestazione">
+					<h3 id="lblIntestazione" name="lblIntestazione" class="testoTroncato1 cx">Fogli di carico</h3> 
+				</div>
+				
+				
+			</div>
+               
+			<div id="divCorpoLista" class="posTopA110p posBottomA padSx5 w100-10p">
+                <div class="row fasciaIntestazione h60p" style="margin-bottom: 0px;">
+                    <div class="row w100-70p padSx5">
+                        <div class="testo16"><div class="row w70">Vettore</div><div class="row w30">Rif. Ufficio</div></div>
+                        <div class="testo14 padSx5">
+                            <div class="row w40">Data</div>
+                            <div class="row w30 cx">N. Ordini</div>
+                            <div class="row w30 cx">N. Pallets</div>
+                            
+                        </div>
+                    </div>
+                </div>
+				<div id="listaFogliDiCarico" class="row w100 h100-130p scrool"></div>
+                <div id="divPiede" class="posBottomA w100">
+
+                    <div id="cmdBottom" class="posBottomA" style="width: calc(100% + 5px);margin-left: -5px;">
+                        <div class="pulsantieraDescrizione">
+                            <!-- <label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" href="#" class="w33" title="Filtro Prodotti"><img src="img/bianche/filter.svg" /></label>  -->
+                            <label id="btnRefresh" name="btnRefresh" class="w100 h65p" title="Aggiorna lista" onclick="avviaCarDati('listaFogliDiCarico');">
+                                <img src="img/bianche/refresh.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                                <div class="testoTroncato1 normale testoPulsantiera">
+                                    Aggiorna lista
+                                </div>
+                            </label>
+                            
+                        </div>
+                    </div>
+                </div> 
+			</div>
+            <div id="divCorpoFoglioDiCarico" class="posTopA100p posBottomA padSx5 w100-10p hide">
+                <div id="divLotto" name="divLotto" class="h50p has-float-label col4 marg5Top">
+                    <input id="txtBarcode" name="txtLotto" type="text" placeholder="Barcode" onblur="ricercaBarcodeFoglio(this.value,this,'')">
+                    <span class="deleteicon" ></span>
+                    <label for="txtBarcode" >Barcode</label>
+                </div>
+				<div id="elencoFoglioDiCarico" class="w100 posTopA60p posBottomA65p scrool scroolXHidden"></div>
+                <div id="divPiede" class="posBottomA w100">
+
+                    <div id="cmdBottom" class="posBottomA" style="width: calc(100% + 5px);margin-left: -5px;">
+                        <div class="pulsantieraDescrizione">
+                            <!-- <label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" href="#" class="w33" title="Filtro Prodotti"><img src="img/bianche/filter.svg" /></label>  -->
+                            <label id="cmdGeneraDDT" name="cmdGeneraDDT" class="w50 h65p" title="Produci" onclick="controlloFoglioDiCarico()">
+                                <img src="img/bianche/save.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                                <div class="testoTroncato1 normale testoPulsantiera">
+                                    Genera DDT
+                                </div>
+                            </label>
+                            <label id="cmdPulisci" name="cmdPulisci" class="w50 h65p" title="Pulisci" onclick="attivaAlert(xTipoAllert.DOMANDASINO,'Sei sicuro di voler pulire la schermata senza salvare?','elaboraRispostaPulisci_'); ">
+                                <img src="img/bianche/sweeping.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;" />
+                                <div class="testoTroncato1 normale testoPulsantiera">
+                                    Pulisci
+                                </div>
+                            </label>
+                            <!-- <label id="cmdPdf" name="cmdPdf" for="nav-toggleP" class="w33" title="Genera PDF" onclick="carDatiProduzione('report')"><img src="img/bianche/pdf.svg" /></label> -->
+                        </div>
+                    </div>
+                </div> 
+			</div>
+			
+		</div>
+		
+		<input type="checkbox" id="nav-toggleL" hidden>
+        <nav id="navL" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="row navTesta w100">
+				<div class="row fasciaIntestazione">
+					<h3 class="">Titolo Left bar 1</h3> 
+				</div>
+			</div>
+
+			<div class="posTopA52p posBottomA60p navCorpo w100">
+				<ul id="elencoOrdinamento" name="elencoOrdinamento" class="posTopA posBottomA5p elencoR1 w100">
+					
+				</ul>
+			</div>
+
+			<div class="posBottomA5p navPiede w100 intestazione clrScuro h60p">
+				<div id="lblOrdinamento" class="row w100-60p marg5Top testoTroncato h60p cel"></div>
+				<div class="rowDx w60p clrSfumatoScuro" onclick="cambiaOrdinamento()">
+					<img class="imgPiccola50 marg10Sx marg10Dx marg5Top" src="img/bianche/ok.svg" alt="">
+				</div>
+			</div>
+		</nav>
+
+		<script src="js/foglioDiCarico.js"></script>
+        <script src="js/multiDocumento.js"></script>
+    </body>
+</html>

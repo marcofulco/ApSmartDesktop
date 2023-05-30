@@ -1,0 +1,151 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Presa Ordini">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Azienda Pratica Smart</title>
+		<link href="css/style.css?ver=2.0" rel="stylesheet" type="text/css">
+		<script src="js/script.js?ver=3.0"></script>
+		<script src="config/config.js"></script>
+	</head>
+	<body>
+		<div id="divBase" class="posTop clrBianco w100 h100">
+			<div id="divTesta" class="row w100">
+				<div id="divTestaSuperiore" class="row w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#" onclick="tornaScheda()"><img class="imgPiccola w60p" src="img/bianche/back.svg" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>
+				
+				<div class="row w100">
+					<div class="row w100">
+						<div id="tabLink" name="tabLink" class="tablink-content">
+							<button class="tablinkColonne intestazione w20 tablinkSelezionato" id="tabFatture" onclick="tabClick(this)">Fatture</button>
+							<button class="tablinkColonne intestazione w20" id="tabOrdini" onclick="tabClick(this)">Ordini</button>
+							<button class="tablinkColonne intestazione w20" id="tabIngressi" onclick="tabClick(this)">Ingressi</button>
+							<button class="tablinkColonne intestazione w20" id="tabIncassi" onclick="tabClick(this)">Incassi</button>
+							<button class="tablinkColonne intestazione w20" id="tabPagamenti" onclick="tabClick(this)">Pagamenti</button>
+						</div>
+					</div>
+					
+					<div id="divTipoGrafico" name="divTipoGrafico" class="row selectDiv w90p marg1Bottom">
+						<span class="selectDefault" id="2">Mese</span>
+						<select id="cmbTipoGrafico" name="cmbTipoGrafico" class="selectBox" onchange="changeSelect(this)">
+							<option value="1">Giorno</option>
+							<option value="2">Mese</option>
+							<option value="3">Anno</option>
+						</select>
+					</div>
+	
+					<div id="divAnno" name="divAnno" class="row selectDiv w70p marg1Bottom">
+						<span class="selectDefault"></span>
+						<select id="selAnno" class="selectBox" onchange="changeSelect(this)">
+							
+						</select>
+					</div>
+	
+					<div id="divMese" name="divMese" class="row selectDiv w100p marg1Bottom">
+						<span class="selectDefault" id="08">Agosto</span>
+						<select class="selectBox" onchange="changeSelect(this)">
+							<option value="01">Gennaio</option>
+							<option value="02">Febbraio</option>
+							<option value="03">Marzo</option>
+							<option value="04">Aprile</option>
+							<option value="05">Maggio</option>
+							<option value="06">Giugno</option>
+							<option value="07">Luglio</option>
+							<option value="08">Agosto</option>
+							<option value="09">Settembre</option>
+							<option value="10">Ottobre</option>
+							<option value="11">Novembre</option>
+							<option value="12">Dicembre</option>
+						</select>
+					</div>
+	
+					<div id="cmdAggiorna" class="pulsantiNoSfondo posTopA45p posRightA10p">
+						<a href="#"  title="Aggiorna Dati" onclick="avviaCarDati('',true)"><img class="w30p" src="img/Nere/refresh.svg" /></a>
+					</div>
+
+					<div id="divAgente" name="divAgente" class="row selectDiv w200p">
+						<span name="spAgente" class="selectDefault" id="0">Seleziona Agente</span>
+						<select id="cmbAgente" name="cmbAgente" class="selectBox" onchange="changeSelect(this)">
+							<option id="primaOpzione" value="0">Seleziona Agente</option>
+						</select>
+					</div>
+					<div id="divTorta" class="row h30p marg10Top marg10Sx marg10Bottom">
+						<input id="chkTorta" name="chkTorta" type="checkbox" class="w30p h30p" onclick="avviaCarDati('', true);">
+						<label id="lblTorta" for="chkTorta" class="intestazione posTop-5p clrTestoNero">x Famiglia Articolo</label>
+					</div>
+				</div>
+			</div>
+			
+			<div id="divCorpo" class="row w100">
+				<div id="divCliente" class="row w100 intestazione cx clrScuro marg5Bottom testoTroncato1"></div>
+				<div class="row w100 marg5Sx">
+					<label id="lblFatturato" name="lblFatturato" class="intestazioneGrafico" for=""></label>
+
+					<div id="divRighe" class="rowDx h30p w90p hide">
+						<input id="optRighe" name="chkAperti" type="radio" class="w20p h20p" onclick="avviaCarDati();" checked>
+						<label for="optRighe" class="intestazioneGrafico posTop-5p clrTestoNero">Righe</label>
+					</div>
+				</div>
+	
+				<div class="row w100 marg5Sx">
+					<label id="lblFatturatoP" name="lblFatturatoP" class="intestazioneGrafico" for=""></label>
+
+					<div id="divValore" class="rowDx h30p w90p hide">
+						<input id="optValore" name="chkAperti" type="radio" class="w20p h20p" onclick="avviaCarDati();">
+						<label for="optValore" class="intestazioneGrafico posTop-5p clrTestoNero">Valore</label>
+					</div>
+				</div>
+				
+				<canvas id="myChart" style="position: relative;"></canvas>				
+			</div>
+	
+			<div id="divPiede" class="w100 posBottom">
+				<div class="w100 clrBase">
+					<div id="pulsantiera" class="pulsantiera">
+						<a href="#" class="w50 h65p" title="Lista Venduto" onclick="listaVenduto()">
+                            <img src="img/bianche/statDetails.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;" >
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                L.Fatture
+                            </div>
+                        </a>
+						<a href="#" class="w50 h65p" title="Stato Ordini" onclick="statoOrdini()">
+                            <img src="img/bianche/statoOrdini.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;" >
+                            <div  class="testoTroncato1 normale testoPulsantiera">
+                                Ordini
+                            </div>
+                        </a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/chart.min.js"></script>
+		<script src="js/chartjs-plugin-datalabels.min.js"></script>
+		<script src="js/hammer.min.js"></script>
+		<script src="js/chartjs-plugin-zoom.min.js"></script>
+		<script src="js/graficiAnagrafiche.js"></script>
+    </body>
+</html>

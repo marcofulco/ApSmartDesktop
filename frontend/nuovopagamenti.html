@@ -1,0 +1,213 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Nuovo Cliente">
+				
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Nuovo Pagamento</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+		<script src="componenti/elementiNuovoPagamenti.js"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop w100 h100">
+			<div id="divTesta" class="row w100">
+				<div class="row w100 h60p">
+					<div class="row w10">
+						<div class="w60p" onclick="esci()">
+							<a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>
+				<div class="row fasciaIntestazione w100">
+					<h3 id="divTitolo" class="">NUOVO PAGAMENTO</h3> 
+				</div>	
+			</div>	
+			
+			<div id="divCorpo" class="posTopA105p posBottomA60p w100 scrool">
+				<div class="w100">			
+					<div name="schedaCliente" id="schedaCliente" class="row w100-5p marg5Sx ul">
+						<input
+							id="txtID"
+							type="text"
+							class="hide"
+							placeholder="ID"
+					  	/>
+						<div class="row w100">
+							<div class="has-float-label col6 ">
+								<input id="txtDescrizione" type="text" class="w100-10p" placeholder="Pagamento" onkeypress="resetErrore(this)">
+								<label for="txtDescrizione">Pagamento</label>
+							</div>
+
+							<div class="row w100">
+								<div class="has-float-label row col2">
+								  <input
+									id="txtSconto_Pag"
+									type="number"
+									placeholder="0"
+									onkeypress="resetErrore(this)"
+								  />
+								  <label for="txtSconto_Pag">Sc. Cassa</label>
+								</div>
+								<div class="has-float-label row col2">
+								  <input
+									id="txtSpese_Incasso"
+									type="number"
+									placeholder="0"
+									onkeypress="resetErrore(this)"
+								  />
+								  <label for="txtSpese_Incasso">Spese Incasso</label>
+								</div>
+								<div class="has-float-label row col2">
+								  <input
+									id="txtGgAgg"
+									type="number"
+									placeholder="0"
+									onkeypress="resetErrore(this)"
+								  />
+								  <label for="txtGgAgg">gg. Aggiuntivi</label>
+								</div>
+							  </div>
+
+							  <div class="row w100">
+								<div class="has-float-label row col6">
+								  <textarea
+									id="txtNote"
+									type="text"
+									class="testoNormale h80p"
+									placeholder="Note"
+									rows="5"
+									onkeypress="resetErrore(this)"
+								  ></textarea>
+								  <label for="txtNote">Note</label>
+								</div>
+							  </div>
+
+							  <div class="row w100">
+								<div class="row col3 marg5Bottom">
+								  <input
+									id="chkFineMese"
+									name="chkFineMese"
+									type="checkbox"
+									class="w30p h30p"
+								  />
+								  <label
+									for="chkFineMese"
+									class="intestazione posTop-5p"
+								  >Predefinito</label>
+								</div>
+								<div class="row col3 marg5Bottom">
+								  <input
+									id="chkNoFido"
+									name="chkNoFido"
+									type="checkbox"
+									class="w30p h30p"
+								  />
+								  <label
+									for="chkNoFido"
+									class="intestazione posTop-5p"
+								  >Escludi da Autorizzazione Fido</label>
+								</div>
+							  </div>
+
+							  <div class="row w100">
+								<div class="row col3 marg5Bottom">
+								  <input
+									id="chkAvvenuto"
+									name="chkAvvenuto"
+									type="checkbox"
+									class="w30p h30p"
+								  />
+								  <label
+									for="chkAvvenuto"
+									class="intestazione posTop-5p"
+								  >Avvenuto</label>
+								</div>
+								<div class="row col3 marg5Bottom">
+								  <input
+									id="chkRaggruppa"
+									name="chkRaggruppa"
+									type="checkbox"
+									class="w30p h30p"
+								  />
+								  <label
+									for="chkRaggruppa"
+									class="intestazione posTop-5p"
+								  >Raggruppa Ri.Ba.</label>
+								</div>
+							  </div>
+
+							  <div class="row w100">
+								<div class="row col6 marg5Bottom">
+								  <input
+									id="chkRateUguali"
+									name="chkRateUguali"
+									type="checkbox"
+									class="w30p h30p"
+									onclick="checkRateUguali(this)"
+								  />
+								  <label
+									for="chkRateUguali"
+									class="intestazione posTop-5p"
+								  >Importi Uguali</label>
+								</div>
+							</div>
+
+							<div id="divElencoPagamenti" class="row w100 h450p">	
+								<div class="row w100">
+									<div class="row fasciaIntestazione col6">
+										<h3 class="">TIPOLOGIA PAGAMENTI</h3> 
+									</div>	
+								</div>
+								<div class="row intestazioneGriglie clrScuro col6 h30p padTop10 tableStyle">
+									<div class="row w25p cx">Tipo</div>
+									<div class="row w15-25p hPiccolo cx">Iniz. Scad.</div>
+									<div class="row w15 hPiccolo cx">GG</div>
+									<div class="row w15 hPiccolo cx">%Imponib.</div>
+									<div class="row w25 hPiccolo cx">%Iva</div>
+								</div>
+								
+								<ul id="elencoPagamenti" name="elencoPagamenti" class="elencoRubrica col6 posTopA95p posBottomA5p">
+									
+								</ul>
+							</div>
+							<div class="row w100 pulsantieraPiccola">
+								<a id="dNuovoPagamento" href="#" class="row col6" title="Nuovo Pagamento" onclick="aggiungiLiR();"><img src="img/bianche/add.svg" /></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+      <div id="divPiede" class="posBottom w100">
+        <div class="w100">
+          <div class="pulsantiera">
+            <a href="#" class="w33" title="Salva" onclick="Salva()"><img src="img/bianche/save.svg" /></a>
+            <a href="#" class="w33" title="Duplica" onclick="Duplica('txtDescrizione')"><img src="img/bianche/duplica.svg" /></a>
+            <a href="#" class="w33" title="Annulla" onclick="esci()"><img src="img/bianche/annulla.svg" /></a>
+          </div>
+        </div>
+      </div>
+		</div>
+
+		<script src="js/nuovoPagamenti.js"></script>
+    </body>
+</html>

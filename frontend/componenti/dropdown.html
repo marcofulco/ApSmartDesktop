@@ -1,0 +1,90 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="description" content="Presa Ordini">
+		<!--<meta http-equiv="refresh" content="5;URL=http://www.google.it">-->
+		<!--<meta name="robots" content="all|none/ index | index /follow|no follow|no>-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--<link href="css/style.css" rel="stylesheet" type="text/css">-->
+        <link href="../css/style.css" rel="stylesheet" type="text/css">
+
+        <title>Input Box Search</title>
+
+        <style>
+            .dropbtn{
+                background-color: #3498db;
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtn:hover, .dropbtn:focus {
+                background-color: #2980b9;
+            }
+
+            .dropdown {
+                display: inline-block;
+            }
+            .dropdown-content{
+                display: none;
+                position: absolute;
+                background-color: #f1f1f1;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+            .show {
+                display: block;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="dropdown">
+            <button onclick="ApriDropDown()" class="dropbtn">Dropdown</button>
+            <div id="myDropDown" class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
+
+        <script>
+            function ApriDropDown() {
+                document.getElementById("myDropDown").classList.toggle("show");
+            }
+
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns =document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i=0; i<dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

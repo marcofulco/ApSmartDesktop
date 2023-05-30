@@ -1,0 +1,191 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Incasso">
+				
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Nuovo Cliente</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+		<script src="componenti/elementiIncassi.js"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop posBottom w100">
+			<div id="divTesta" class="posTopA w100">
+				<div class="row w100 h60p">
+					<div class="row w10">
+						<div class="w60p" onclick="esci()">
+							<a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>
+			</div>	
+			
+			<div id="divCorpo" class="posTopA65p posBottomA90p w100 scrool">
+				<div class="w100">			
+					<div name="schedaCliente" id="schedaCliente" class="row w100-5p marg5Sx ul">
+						<div class="row col6">
+							<div class="row fasciaIntestazione w100">
+								<h3 id="divTitolo" class="testoTroncato1">INCASSO CLIENTE</h3> 
+							</div>
+							<div class="row w100">
+								<div id="divContoFin" name="divContoFin" class="row has-float-label col4">
+									<span class="selectDefault" id="0">Seleziona Conto Finanziario</span>
+									<label for="cmbConto" >Conto Finanziario</label>
+									<select id="cmbConto" name="cmbConto" class="selectBox" onchange="changeSelect(this)">
+										<option value="0">Seleziona Conto Finanziario</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="row w100">
+								<div class="row datePikerContainer">
+									<div id="divData" name="divData" class="has-float-label datePiker">
+										<input id="txtData" name="txtData" type="date">
+										<label for="txtData">Data</label>
+									</div>
+								</div>
+								<div class="row datePikerContainer">
+									<div id="divDataConsegna" name="divDataConsegna" class="has-float-label datePiker">
+										<input id="txtDataConsegna" name="txtDataConsegna" type="date">
+										<label for="txtDataConsegna">Data Consegna</label>
+									</div>
+								</div>
+							</div>
+							<div class="row w100">
+								<div id="divImporto" class="has-float-label row col2">
+									<input id="txtImporto" type="number" inputmode="decimal" class="w100-10p" placeholder="Importo" onkeypress="resetErrore(this)" onchange="assegnaDaDistribuire()" value="0.00">
+									<label for="txtImporto" >Importo</label>
+								</div>
+								<div id="divAbbuono" class="has-float-label row col2">
+									<input id="txtAbbuono" type="number" class="w100-10p" placeholder="Abbuono" onkeypress="resetErrore(this)" onchange="assegnaAbbuono()" value="0.00">
+									<label for="txtAbbuono" >Abbuono</label>
+								</div>
+								<div id="divChkTotalizza" class="row h40p marg5Top">
+									<input id="chkTotalizza" name="chkNoPromo" type="checkbox" class="toggle-button" onclick="chkTotalizzaClick(this)">
+									<label for="chkTotalizza" class="intestazione">Totalizza Importo</label>
+								</div>
+							</div>
+							<div id="divSpese" class="row w100">
+								<div class="row fasciaIntestazione w100">
+									<h3 id="divTitolo" class="row w100-50p">SPESE BANCARIE/POSTALI</h3> 
+									<img id="cmdDatiSpese" class="row w30p pulsantiNoSfondo posTop5p" src="img/bianche/down.svg" alt="" onclick="mostraNascondiElemento('divContSpese','hide',this)"></img>
+								</div>
+								<div id="divContSpese" class="row w100 hide">
+									<div id="divImportoSpese" class="has-float-label row col2">
+										<input id="txtImportoSpese" type="number" inputmode="decimal" class="w100-10p" placeholder="Importo" onkeypress="resetErrore(this)" value="0.00">
+										<label for="txtImportoSpese" >Importo</label>
+									</div>
+									<div id="divContoSpese" name="divContoSpese" class="row has-float-label col4">
+										<span class="selectDefault" id="0">Seleziona Contropartita di Costo</span>
+										<label for="cmbContoSpese" >Contropartita di Costo</label>
+										<select id="cmbContoSpese" name="cmbContoSpese" class="selectBox" onchange="changeSelect(this)">
+											<option value="0">Seleziona Contropartita di Costo</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row col6">
+							<div class="marg5SxOpzCol6">
+								<div class="row fasciaIntestazione w100">
+									<h3 id="divTitolo" class="row w100-50p">NOTE</h3> 
+									<img id="cmdDatiSpese" class="row w30p pulsantiNoSfondo posTop5p" src="img/bianche/down.svg" alt="" onclick="mostraNascondiElemento('divNote','hide',this)"></img>
+								</div>
+								<div id="divNote" class="row w100 hide">
+									<div class="has-float-label row w100">
+										<textarea id="txtNote" type="text" placeholder="Note" class="testoNormale h115p" onkeypress="resetErrore(this)"></textarea>
+										<label for="txtNote" >Note</label>
+									</div>
+									<div class="has-float-label row w100">
+										<textarea id="txtNoteInterne" type="text" placeholder="Note Interne" class="testoNormale h115p" onkeypress="resetErrore(this)"></textarea>
+										<label for="txtNoteInterne" >Note Interne</label>
+									</div>							
+								</div>
+							</div>
+						</div>						
+						<div class="row w100">
+							<button id="cmdPagaTutto" class="row clrTestoBianco pulsante" onclick="pagaTutti()">Paga Tutto</button>
+							<button id="cmdAnnullaPaga" class="row clrTestoBianco pulsante marg5Sx" onclick="pagaTutti(true)">Annulla Paga</button>
+							<div id="divDistribuito" class="has-float-label rowDx col2 marg5TopPiccolo">
+								<input id="txtDistribuito" type="number" inputmode="decimal" class="w100-10p" placeholder="Distribuito" onkeypress="resetErrore(this)" value="0.00" disabled>
+								<label for="txtDistribuito" >Distribuito</label>
+							</div>
+							<div id="divDaDistribuire" class="has-float-label rowDx col2 marg5TopPiccolo">
+								<input id="txtDaDistribuire" type="number" inputmode="decimal" class="w100-10p" placeholder="da Distribuire" onkeypress="resetErrore(this)" value="0.00" disabled>
+								<label for="txtDaDistribuire" >da Distribuire</label>
+							</div>
+						</div>
+						<div id="divElencoDoc" class="row w100 h60">	
+							<div class="row w100">
+								<div id="tabLink" name="tabLink" class="row tablink-content w100">
+									<button class="tablinkColonne w33 intestazione cx tabLinkSelezionato" id="tabPartite" onclick="avviaCarDatiDoc()">PARTITE</button>
+									<button class="tablinkColonne w33 intestazione cx" id="tabScadenze" onclick="avviaCarDatiScad()">SCADENZE</button>
+									<button class="tablinkColonne w33 intestazione cx hide" id="tabDDT" onclick="">DDT</button>
+								</div>			
+							</div>
+							
+							<div class="row intestazioneGriglie clrScuro w100-5p h30p padTop10 marg5Top">
+								<div class="row hGrande w40">Descrizione</div>
+								<div class="row w20 hPiccolo">Tipo Documento</div>
+								<div id="lblDivData" class="row w10 hPiccolo cx">Data</div>
+								<div class="row w10 hPiccolo cx">Numero</div>
+								<div class="row w20 cx">Importo</div>
+								<div class="row w20 cx">Residuo</div>
+								<div class="row w20 cx">Assegnato</div>
+							</div>
+							
+							<ul id="elencoPartite" name="elencoPartite" class="elencoRubrica posTopA100p posBottomA-35p w100" onscroll="elencoPartiteScroll(this,'incassa.html')">
+							
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+            <input type="file" id="flImmagineCaricata" multiple="" accept="image/*,application/pdf,application/msword,
+                    application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,
+                    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.csv" style="display:none">
+
+			<div id="divPiede" class="posBottomA w100">
+				<div class="w100">
+					<div id="divTotale" name="divTotale" class="h30p w100 row clrScuro">
+						<div id="divContScaduto" class="row w50 intestazione testo16 padTop6">
+							<div id="divScaduto" class="w95 h30p testoTroncato1 dx">Scaduto € 0,00</div>
+						</div>
+						<div id="divContSaldo" class="row w50-10p intestazione testo16 padTop6">
+							<div id="divSaldo" class="w95 padDx10 h30p testoTroncato1 dx">Saldo € 0,00</div>
+						</div>
+					</div>	
+
+					<div id="pulsantiera" class="pulsantiera">
+						<a id="cmdElimina" href="#" class="" title="Elimina" onclick="Elimina()"><img src="img/bianche/delete.svg"/></a>
+						<a href="#" class="hide" title="Stampa" onclick="Stampa()"><img src="img/bianche/pdf.svg"/></a>
+						<a href="#" class="" title="Allega" onclick="apriModalAllegati()"><img src="img/bianche/attach.svg"/></a>
+						<a href="#" class="" title="Salva" onclick="Salva()"><img src="img/bianche/save.svg"/></a>
+						<a href="#" class="" title="Annulla" onclick="esci()"><img src="img/bianche/annulla.svg"/></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/incassa.js"></script>
+    </body>
+</html>

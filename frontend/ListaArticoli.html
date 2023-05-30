@@ -1,0 +1,914 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval' blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;"> -->
+		<meta http-equiv="Content-Security-Policy" content="default-src * data: 'unsafe-eval' 'unsafe-inline' blob:; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Lista Articoli">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Catalogo Prodotti</title>
+		<link href="css/style.css?ver=4.9" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=4.4"></script>
+		<script src="componenti/elementiListaArticoli.js?ver=1.7"></script>
+		<script src="componenti/elementiStoricoVendite.js"></script>
+		<script src="componenti/elementiScalaPrezzi.js"></script>
+		<script src="componenti/elementiDestinazioni.js?ver=2.0"></script>
+		<script src="componenti/modalRubrica.js"></script>
+		<script src="js/decimal.js" id="libreriaDecimali"></script>
+		<!-- <script src="componenti/elementiCarrello.js?ver=2.3"></script> -->
+	</head> 
+	<body class="clrBase">
+		<input type="checkbox" id="nav-toggleF" hidden>
+        <nav id="navF" class="nav navArt clrSfumatoChiaro">
+            <!--<label for="nav-toggleF" class="nav-toggle" onclick=""></label>-->
+			<div class="row navTesta w100">
+				<div class="row fasciaIntestazione">
+					<h3 class="row w100-90p">FILTRO PRODOTTI</h3> 
+					<label id="cmdChiudiFiltri" name="cmdChiudiFiltri" for="nav-toggleF" href="#" class="rowDx w40p" title="Chiudi Filtro Prodotti"><img class="w30p marg5Top" src="img/bianche/annulla.svg" /></label>
+					<div class="rowDx w40p" title="Elimina Tutti i Filtri Prodotto"><a href="#" onclick="eliminaTuttiFiltri(this)"><img class="imgPiccola30Dx marg10Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+				</div>
+				
+				<div id="tabLink" name="tabLink" class="tablink-content">
+					<button class="tablink intestazione" id="tabAssortimento" onclick="openPage('Assortimento', this)">Assortimenti</button>
+					<button class="tablink intestazione" id="tabFamiglia" onclick="openPage('Famiglia', this)">Famiglia</button>
+					<button class="tablink intestazione" id="tabTipologia" onclick="openPage('Tipologia', this)">Marchio</button>
+					<button class="tablink intestazione" id="tabAttributo" onclick="openPage('Attributi', this)">Attributi</button>
+                    <button class="tablink intestazione" id="tabCarichi" onclick="openPage('Carichi', this)">Carichi</button>
+				</div>
+				<div class="row h7p cel"></div>
+			</div>
+			
+			<div class="navCorpo w100 posTopA105p posBottomA">
+				<div hMeno="110" id="Assortimento" name="Assortimento" class="tabcontent posTopA5p posBottomA w100">
+					<div id="divRicercaAssortimento" name="divRicercaAssortimento" class="has-float-label w100">
+						<input id="txtRicercaAssortimento" name="txtRicercaAssortimento" type="text" placeholder="Ricerca Assortimento ..." onkeyup="ricercaSuHtml('txtRicercaAssortimento','elencoAssortimento');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaAssortimento'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaAssortimento','elencoAssortimento');"></span>
+						<label for="txtRicercaAssortimento" >Ricerca Assortimento ...</label>
+					</div>
+		
+					<ul id="elencoAssortimento" name="elencoAssortimento" class="elencoR1 w100 posTopA52p posBottomA45p">
+						
+					</ul>
+		
+					<div class="intestazione clrScuro h40p posBottomA5p w100">
+						<div id="lblFiltroAssortimento" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+						<div class="posRightA10p w30p"><a href="#" title="Elimina Filtro Assortimento" onclick="eliminaFiltroAssortimento()"><img class="imgPiccola30Dx marg10Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+					</div>
+				</div>
+	
+				<div hMeno="110" id="Famiglia" name="Famiglia" class="tabcontent posTopA5p posBottomA w100">
+					<!-- <div id="divRicercaFamiglia" name="divRicercaFamiglia" class="has-float-label w100">
+						<input id="txtRicercaFamiglia" name="txtRicercaFamiglia" type="text" placeholder="Ricerca Famiglia ..." onkeyup="ricercaSuHtml('txtRicercaFamiglia','elencoFamiglia');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaFamiglia'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaFamiglia','elencoFamiglia');"></span>
+						<label for="txtRicercaFamiglia" >Ricerca Famiglia ...</label>
+					</div> -->
+		
+					<ul id="elencoFamiglia" name="elencoFamiglia" class="elencoR1 w100 posTopA posBottomA45p">
+						
+					</ul>
+		
+					<div class="intestazione clrScuro h40p posBottomA5p w100">
+						<div id="lblFiltroFamiglia" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+						<div class="posRightA10p w30p"><a href="#"  title="Elimina Filtro Famiglia" onclick="eliminaFiltroFamiglia()"><img class="imgPiccola30Dx marg10Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+					</div>
+				</div>
+	
+				<div hMeno="110" id="Tipologia" name="Tipologia" class="tabcontent posTopA5p posBottomA w100">
+					<div id="divRicercaTipologia" name="divRicercaTipologia" class="has-float-label w100">
+						<input id="txtRicercaTipologia" name="txtRicercaTipologia" type="text" placeholder="Ricerca Marchio ..." onkeyup="ricercaSuHtml('txtRicercaTipologia','elencoTipologia');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaTipologia'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaTipologia','elencoTipologia');"></span>
+						<label for="txtRicercaTipologia" >Ricerca Marchio ...</label>
+					</div>
+		
+					<ul id="elencoTipologia" name="elencoTipologia" class="elencoR1 w100 posTopA52p posBottomA45p">
+						
+					</ul>
+		
+					<div class="intestazione clrScuro w100 h40p posBottomA5p">
+						<div id="lblFiltroTipologia" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+						<div class="posRightA10p w30p"><a href="#" title="Elimina Filtro Tipologia" onclick="eliminaFiltroTipologia()"><img class="imgPiccola30Dx marg10Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+					</div>
+				</div>
+	
+				<div hMeno="110" id="Attributi" name="Attributi" class="tabcontent posTopA5p posBottomA w100">	
+					<!-- <div id="divRicercaAttributi" name="divRicercaAttributi" class="has-float-label w100">
+						<input id="txtRicercaAttributi" name="txtRicercaAttributi" type="text" placeholder="Ricerca Attributi ..." onkeyup="ricercaSuHtml('txtRicercaAttributi','elencoAttributi');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaAttributi'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaAttributi','elencoAttributi');"></span>
+						<label for="txtRicercaAttributi" >Ricerca Attributi ...</label>
+					</div> -->
+	
+					<ul id="elencoAttributo" name="elencoAttributo" class="elencoR1 w100 posTopA posBottomA60p">
+						<li id="liDISPONIBILITA" class="h35p clrBase marg5Bottom">
+							<label for="DISPONIBILITA" id="lblDISPONIBILITA" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>Disponibilità > 0</span>
+									<input id="DISPONIBILITA" name="DISPONIBILITA" descrizione="Disponibilità > 0" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+
+						<li id="liVENDUTO" class="h35p clrBase marg5Bottom">
+							<label for="VENDUTO" id="lblVENDUTO" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>Già Acquistati</span>
+									<input id="VENDUTO" name="VENDUTO" descrizione="Già Acquistati" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+
+						<li id="liINELIMINAZIONE" class="h35p clrBase marg5Bottom">
+							<label for="INELIMINAZIONE" id="lblINELIMINAZIONE" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>In Stock</span>
+									<input id="INELIMINAZIONE" name="INELIMINAZIONE" descrizione="In Stock" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+
+						<li id="liINPROMOSCALA" class="h35p clrBase marg5Bottom">
+							<label for="INPROMOSCALA" id="lblINPROMOSCALA" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span id="spPromoScala">Giornalino e Prezzi Netti</span>
+									<input id="INPROMOSCALA" name="INPROMOSCALA" descrizione="Giornalino e Prezzi Netti" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+
+						<li id="liINPROMO" class="h35p clrBase marg5Bottom">
+							<label for="INPROMO" id="lblINPROMO" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>Promo Giornalino</span>
+									<input id="INPROMO" name="INPROMO" descrizione="Promo Giornalino" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+
+						<li id="liSCALA" class="h60p clrBase marg5Bottom">
+							<label for="SCALA" id="lblSCALA" class="row w100 intestazione">
+								<input id="SCALA" name="SCALA" descrizione="Prezzi Netti" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx marg20Top toggle-button" onchange="listaDaAttributo(this)">
+								<div class="w100-25p padTop5">
+									<span>Prezzi Netti<span class="testoNormale testo12"><br>(cliccare su <img id="imgNota" class="w20p" src="img/grafiche/scala.svg"/> per visualizzare scala Prezzi Netti)</span></span>
+								</div>
+							</label>
+						</li>
+
+						<li id="liNEW" class="h35p clrBase marg5Bottom">
+							<label for="NEW" id="lblNEW" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>Nuovi Arrivi</span>
+									<input id="NEW" name="NEW" descrizione="Nuovi Arrivi" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+
+						<li id="liFC" class="h35p clrBase marg5Bottom">
+							<label for="FC" id="lblFC" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>Supplemento Catalogo</span>
+									<input id="FC" name="FC" descrizione="Supplemento Catalogo" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+
+						<li id="liNoSconti" class="h35p clrBase marg5Bottom">
+							<label for="NoSconti" id="lblFC" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>Disattiva Sconti e Promo</span>
+									<input id="NoSconti" name="NoSconti" descrizione="Disattiva Sconti e Promo" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+                        <li id="liUltimiCarichi" class="h35p clrBase marg5Bottom hide">
+							<label for="ultimiCarichi" id="lblFC" class="row w100 intestazione">
+								<div class="w100 padTop5">
+									<span>Ultimi Carichi</span>
+									<input id="ultimiCarichi" name="ultimiCarichi" descrizione="Ultimi Carichi" type="checkbox" class="rowDx w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="listaDaAttributo(this)">
+								</div>
+							</label>
+						</li>
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<label for="nav-toggleF" href="#" class="rowDx posBottomA marg10Dx h50p w50p cx clrSfumatoScuro" title="Chiudi Box Filtri">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+						<div class="rowDx posBottomA marg10Dx h50p w50p cx clrSfumatoScuro" title="Elimina Tutti Filtri Attributi"><a href="#" onclick="eliminaFiltroAttributo()"><img class="imgPiccola50" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+					</div>
+				</div>
+                <div hMeno="110" id="Carichi" name="Carichi" class="tabcontent posTopA5p posBottomA w100">
+                    <ul id="elencoCarichi" name="elencoAttributo" class="elencoR1 w100 posTopA posBottomA60p">
+
+                    </ul>
+                    <div class="intestazione clrScuro h40p posBottomA5p w100">
+						<div id="lblCaricoSelezionato" class="row w100-30p marg5Top testoTroncato1">Selezione:</div>
+						<div class="posRightA10p w30p"><a href="#"  title="Elimina selezione carico" onclick="eliminaFiltroCarico()"><img class="imgPiccola30Dx marg10Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+					</div>
+                </div>	
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleP" hidden>
+        <nav id="navP" class="nav clrSfumatoChiaro">
+			<div class="posTopA5p posBottomA navCorpo w100-10p">
+				<div class="posTopA navTesta w100">
+					<div class="row fasciaIntestazione w100">
+						<div id="intCarrello" class="row w100-120p padSx5 marg5Top testoTroncato1">CARRELLO PRODOTTI</div>
+						<div id="cmdChiudiCarrello" class="rowDx w30p marg10Dx"><a href="#" title="Chiudi Carrello" onclick="apriCarrello()"><img class="imgPiccola30Dx marg5Top" src="img/bianche/annulla.svg" alt=""></a></div>
+						<div id="cmdAggiorna" class="row pulsantiNoSfondo posTop-5p">
+							<a href="#" title="Ricalcola Totali" onclick="ricalcolaTotali();"><img class="w30p" src="img/bianche/refresh.svg"></a>
+						</div>
+						<div id="cmdPDF" class="rowDx w30p marg10Dx hide"><a href="#" title="Genera PDF" onclick="stampa()"><img class="imgPiccola30Dx marg5Top" src="img/bianche/pdf.svg" alt=""></a></div>
+					</div>
+				</div>
+				
+				<div id="divContCorpoCarrello" class="posTopA45p navCorpo w100 posBottomA155p">
+					<ul id="elencoCarrello" class="w100 posTopA posBottomA5p">
+				
+					</ul>
+				</div>
+	
+				<div id="divContPiedeCarrello" class="intestazione testo16 clrScuro h95p navPiede posBottomA65p w100-5p">
+					<div id="divContScCassaC" class="row w100-5p padDx5 marg5Top hide">
+						<div id="divDesScCassaC" class="row w80 testo12 dx testoTroncato1"></div>
+						<div id="divScCassaC" class="row w20 testo12 dx testoTroncato1"></div>
+					</div>
+					<div id="divContTrasportoC" class="row w100-5p padDx5 marg5Top hide">
+						<div id="divDesTrasportoC" class="row w80 testo12 dx testoTroncato1"></div>
+						<div id="divTrasportoC" class="row w20 testo12 dx testoTroncato1"></div>
+					</div>
+					
+					<div class="row w15">
+						<div class="row w100 testo10 padTop5 padSx2">Presunti Evadibili</div>
+						<img id="imgRicT" class="row w30p mH30p marg1Top" src="img/verde/ricarica.svg" alt="XXX"/>
+                        <div class="row w100 testo10 padSx2 hide marg10Top" id="totaleProvvigioniAgente">Prov.</div>
+					</div>
+
+					<div class="row w20">
+						<div id="divRigheEvadibileC" class="row w100 cx testo12 marg10Top testoTroncato1 padDx5"></div>
+						<div id="divRigheC" class="row w100 cx marg5Top testoTroncato1 padDx5"></div>
+						<div id="divTotCostoEv" class="row w100-5p cx testo10 hidden" onclick="visualizzaCosto('divTotCosto;divTotCostoEv','hidden')">
+							<div id="divTotaleCostoCEv" class="row w100 dx testoTroncato1">€ 0,00</div>
+							<div id="divTotaleRicaricoCEv" class="row w100 dx testoTroncato1">%</div>
+							<div id="divTotaleDeltaCEv" class="row w100 dx testoTroncato1">&Delta; 0,00</div>
+						</div>
+					</div>
+
+					<div class="row w20">
+						<div id="divQuEvadibileC" class="row w100 cx testo12 marg10Top testoTroncato1 padDx5 cel"></div>
+						<div id="divQuC" class="row w100 cx marg5Top testoTroncato1 padDx5 cel"></div>
+						<div id="divTotCosto" class="row w100-5p cx testo10 hidden" onclick="visualizzaCosto('divTotCosto;divTotCostoEv','hidden')">
+							<div id="divTotaleCostoC" class="row w100 dx testoTroncato1">€ 0,00</div>
+							<div id="divTotaleRicaricoC" class="row w100 dx testoTroncato1">%</div>
+							<div id="divTotaleDeltaC" class="row w100 dx testoTroncato1">&Delta; 0,00</div>
+						</div>
+					</div>
+
+					<div class="row w45-5p" onclick="visualizzaCosto('divTotCosto;divTotCostoEv')">
+						<div id="divTotEvadibileC" class="row w100 dx testo12 marg10Top testoTroncato1 padDx5">€ 0,00</div>
+						<div id="divTotaleC" class="row w100 dx marg5Top testoTroncato1 padDx5">€ 0,00</div>
+						<div id="divTotaleIvaC" class="row w100 testo12 dx testoTroncato1 padDx5">iva € 0,00</div>
+						<div id="divTotaleDocC" class="row w100 dx testoTroncato1 marg2Top padDx5 clrContornoTopBianco">tot. € 0,00</div>
+					</div>
+				</div>
+				<div class="pulsantiera posBottomA5p">
+					<label id="cmdEliminaCarrello" name="cmdEliminaCarrello" href="#" class="w40p testoGrassetto" title="Elimina Contenuto Carrello" onclick="avviaEliminacontenutoCarrello();">
+						<img class="w30p" src="img/bianche/cestino.svg">
+					</label>
+					<label id="cmdPreOrdine" name="cmdPreOrdine" href="#" class="w50 testoGrassetto" title="Salva Pre Ordine" onclick="apriSalvaOrdine()"><div id="divDesPreOrdine" class="row w100 padTop10">SALVA<br>PREORDINE</div></label>
+					<label id="cmdInvia" name="cmdInvia" href="#" class="w50-40p testoGrassetto" title="Invia Ordine Definitivo" onclick="apriSalvaOrdine(false)"><div class="row w100 padTop10">SALVA<br>ORDINE</div></label>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Modal Box Ingrandimento Immagine -->
+        <div id="myModal" class="modal clrBianco clrTestoNero clrContornoScuro h100">
+			<div class="pulsantiera h60p posTopA posLeftA5p ">
+				<a id="cmdAllegatoM" href="#" class="w20" title="Apri Allegato" onclick="apriAllegato('{ALLEGATIWEB}','divFrame','xFrame');"><img src="img/bianche/attach.svg"/></a>
+				<a id="cmdOpzioniM" href="#" class="w20" title="Apri Opzioni" onclick="apriOpzioni('{CODICE}');"><img src="img/bianche/opzioni.svg"/></a>
+			</div>
+            <div class="row h100p centraVerticalmente w100 marg5Top ">
+                <img class="hide" style="max-height: 100%;" src="" id="marchioModalImmagine">
+            </div>
+            <span class="close clrTestoNero" onclick="chiudiModalBox('myModal');">&times;</span>
+            <div class="row w100 marg5Top">
+				<div class="w100">
+					<img id="bwI" class="posTopA w20p zIndex2" src="img/rosse/back.svg" onclick="cambiaImmagineMouse('{CODICE}',-1)"/>
+					<div id="bw" class="posTopA posLeftACentro w75P clrTestoRosso testoGrassetto cx zIndex2">1/1</div>
+					<img id="bwA" class="posTopA posRightA10p w20p zIndex2" src="img/rosse/forward.svg" onclick="cambiaImmagineMouse('{CODICE}',1)"/>
+				</div>
+				<img class="modal-content" id="img1" name="switchM">
+			</div>
+			<div class="posTopA570p posBottomA25p scrollY-Auto w100">
+				<div id="divLinkFam" class="row w100-2p marg10Top marg2Sx testoNormale marg5Bottom"></div>
+				<div id="divCodiceM" class="row w100 marg10Top testoNormale clrTestoRosso cx"><span id="spCodiceM">codice</span><span id="spCodiceF" class="testoNormale clrTestoNero">codiceForn</span></div>
+				<div id="captionImg" class="row marg5Sx w100-10p testoNormale testoNero marg10Top marg20Bottom"></div>
+			</div>
+			
+		</div>
+		
+		<!-- Modal Box Storico Vendite a Cliente -->
+        <div id="myStorico" class="posTop posBottom modalElenco clrSfumatoChiaro">
+			<div class="posTopA w100">
+				<div id="divTitolo" class="fasciaIntestazione normale padTop6 h40p cx">
+					STORICO ACQUISTI
+					<span class="close" onclick="chiudiModalBox('myStorico');">&times;</span>
+				</div>
+				<div id="captionStorico" class="marg10Bottom marg10Top fasciaIntestazione testoTroncato h60p cx"></div>
+				<!-- <span class="close" onclick="chiudiModalBox();">&times;</span>
+				<div class="clrBase h60p cel"></div>
+				<div id="captionStorico" class="marg10Bottom marg10Top fasciaIntestazione testoTroncato h60p"></div> -->
+				<div class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle">
+					<div class="row w20 cx">Data</div>
+					<div class="row w35 cx">Documento</div>
+					<div class="row w5 cx">UM</div>
+					<div class="row w15 cx">Qu.tà</div>
+					<div class="row w25 cx">Prezzo</div>
+				</div>
+			</div>
+			
+			<div class="posTopA170p posBottomA w100">
+				<ul id="elencoStorico" name="elencoStorico" class="posTopA5p posBottomA5p elencoR2 marg5Sx w100-5p">
+				
+				</ul>
+			</div>
+        </div>
+
+		<!-- Modal Box Dettagli Merce in Arrivo -->
+        <div id="modalMerceInArrivo" class="posTop posBottom modalElenco clrSfumatoChiaro">
+			<div class="posTopA w100">
+				<div id="divTitoloIA" class="fasciaIntestazione normale padTop6 h40p cx">
+					CALENDARIO RIASSORTIMENTI
+					<span class="close" onclick="chiudiModalBox('modalMerceInArrivo');">&times;</span>
+				</div>
+				<div id="captionInArrivo" class="marg10Bottom marg10Top fasciaIntestazione testoTroncato h60p cx"></div>
+				<div class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle">
+					<div class="row w40 cx">Data</div>
+					<div class="row w10 cx">UM</div>
+					<div class="row w20 dx">Qu.tà</div>
+				</div>
+			</div>
+			
+			<div class="posTopA170p posBottomA w100">
+				<ul id="elencoInArrivo" name="elencoInArrivo" class="posTopA5p posBottomA5p elencoR2 marg5Sx w100-5p">
+				
+				</ul>
+			</div>
+        </div>
+
+		<!-- Modal Box Scala Sconti -->
+		<div id="modScalaSconti" class="posTop posBottom modalElenco clrSfumatoChiaro">
+			<div class="posTopA w100">
+				<div id="divTitoloSS" class="fasciaIntestazione normale padTop6 h40p cx">
+					SCALA PREZZI NETTI
+					<span class="close" onclick="chiudiModalBox('modScalaSconti');">&times;</span>
+				</div>
+				<div id="captionScala" class="marg10Bottom marg10Top fasciaIntestazione testoTroncato h60p cx"></div>
+				<div id="captionScalaPrezzo" class="marg10Bottom marg10Top marg30Sx w100-60p fasciaIntestazione clrSfondoArancione testoTroncato h30p cx">Prezzo Abituale € 10,00</div>
+				<div class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle">
+					<div class="row w15 dx">Qu.tà</div>
+					<div class="row w25 dx">Prezzo</div>
+					<div class="row w35 cx">Sconti</div>
+					<div class="row w25 cx">Netto</div>
+				</div>
+			</div>
+			
+			<div class="posTopA213p posBottomA w100">
+				<ul id="elencoScala" name="elencoScala" class="posTopA5p posBottomA5p elencoR2 marg5Sx w100-5p">
+				
+				</ul>
+			</div>
+        </div>
+
+		<!-- Modal Box Alternativi -->
+		<div id="modAlternativi" class="posTop posBottom modalElenco zIndex1 clrSfumatoChiaro">
+			<div class="posTopA w100">
+				<div id="divTitolo" class="fasciaIntestazione normale padTop6 h40p cx">
+					ARTICOLI ALTERNATIVI
+					<span class="close" onclick="chiudiModalBox('modAlternativi',pulisciUL,'elencoAlternativi');">&times;</span>
+				</div>
+			</div>
+			
+			<div class="posTopA50p posBottomA w100">
+				<ul id="elencoAlternativi" name="elencoAlternativi" class="posTopA5p posBottomA5p w100">
+				
+				</ul>
+			</div>
+        </div>
+
+		<!-- Modal Box Opzioni -->
+		<div id="modOpzioni" class="posTop posBottom modalElenco zIndex3 clrSfumatoChiaro">
+			<div class="posTopA w100">
+				<div id="divTitolo" class="fasciaIntestazione normale padTop6 h40p cx">
+					OPZIONI ARTICOLO
+					<span class="close" onclick="chiudiModalBox('modOpzioni',pulisciUL,'elencoOpzioni');">&times;</span>
+				</div>
+			</div>
+			
+			<div class="posTopA50p posBottomA w100">
+				<ul id="elencoOpzioni" name="elencoOpzioni" class="posTopA5p posBottomA5p w100">
+				
+				</ul>
+			</div>
+        </div>
+
+		<!-- Modal Box Modifica Quantità Articoli  -->
+		<div id="modModificaQuantita" class="modalQuantitaContainer">
+			<div class="modalQuantita">
+				<div class="row w100-4p padSx2 padDx2 padTop5 padBot10">
+					<div id="divModalDescrizione" class="row intestazione cx w100 h60p testoTroncato"></div>
+					<div id="divModalCodice" class="row intestazione clrTestoRosso cx w100"></div>
+					<div class="row w100 marg10Top">
+						<div class="row w50">
+							<div id="divDesQuUnitaria" class="row w35 testoNormale">Conf.da</div>
+							<div id="divQuUnitaria" class="row testoGrassetto"></div>
+						</div>
+						<div id="divArrivo" class="row w50">
+							<div id="divDesInArrivo" class="row w40 testoNormale">In Arrivo</div>
+							<div id="divInArrivo" class="row testoGrassetto"></div>
+						</div>
+						<div class="row w50" onclick="visualizzaCosto('divContCostoM')">
+							<div class="row w35 testoNormale">Listino</div>
+							<div id="divListino" class="row testoGrassetto"></div>
+						</div>
+						<div id="divDisponibile" class="row w50">
+							<div class="row w40 testoNormale">Disp.tà</div>
+							<div id="divDisp" class="row testoGrassetto"></div>
+						</div>
+						<div class="row w25">
+							<div class="row w67 testoNormale">% Iva</div>
+							<div id="divPercIvaM" class="row testoGrassetto"></div>
+							<div id="divIdIvaM" class="row testoGrassetto hide"></div>
+						</div>
+						<div id="divContCostoM" class="row w25 cx testoNormale testo10 hidden" onclick="visualizzaCosto('divContCostoM','hidden')">
+							<div id="divCostoM" class="row w100 sx testoTroncato1"></div>
+							<div id="divRicaricoM" class="row w45 sx testoTroncato1"></div>
+							<div id="divDeltaM" class="row w55 sx testoTroncato1"></div>
+						</div>
+						<div id="divNettoM" class="row w50" onclick="visualizzaCosto('divContCostoM')">
+							<div class="row w40 testoNormale">Prz.Netto</div>
+							<div id="divPrezzoNettoM" class="row testoGrassetto sx testoTroncato1"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="w100">
+					<div class="row w100">
+						<div class="has-float-label row w100p">
+							<input id="txtQu" type="number" inputmode="decimal" placeholder="Qu.tà" onkeyup="calcolaImporto(this)" onfocusout="calcolaImporto(this)" onfocus="inputFocus(this)">
+							<label id="slblQu" for="txtQu" >Qu.tà</label>
+						</div>
+						<div id="modImporti">
+							<div class="has-float-label row w130p">
+								<input id="txtPrezzo" type="number" inputmode="decimal" placeholder="Prezzo" onkeyup="calcolaImporto(this)" onfocus="inputFocus(this)" onchange="document.getElementById('txtSc1').value=''">
+								<label for="txtPrezzo" >Prezzo</label>
+							</div>
+						
+							<div class="has-float-label row w130p">
+								<input id="txtSc1" type="text" inputmode="tel" placeholder="Sc.1+2+3" onkeyup="calcolaImporto(this)" onfocus="inputFocus(this)">
+								<label for="txtSc1" onclick="assegnaSconto()" >Sc.1+2+3</label>
+							</div>
+						</div>
+					</div>
+					<div id="divReso" class="row w50 hide">
+						<div class="has-float-label row w150p">
+							<input id="txtQuReso" type="number" inputmode="decimal" placeholder="Qu.tà Sostituita" onfocus="inputFocus(this)">
+							<label id="slblQuReso" for="txtQuReso" >Qu.tà Sostituita</label>
+						</div>
+					</div>
+					<div id="divOmaggio" class="row w50 hide">
+						<div class="has-float-label row w150p">
+							<input id="txtQuOmaggio" type="number" inputmode="decimal" placeholder="Qu.tà Omaggio" onfocus="inputFocus(this)">
+							<label id="slblQuOmaggio" for="txtQuOmaggio" >Qu.tà Omaggio</label>
+						</div>
+					</div>
+					<div class="row w100 marg5Top">
+						<div class="has-float-label row w200p">
+							<input id="txtImporto" type="text" placeholder="Importo" disabled class="testoGrassetto">
+							<label for="txtImporto" >Importo</label>
+						</div>
+						<div class="row w30p">
+							<img id="imgRicM" class="row w30p mH30p marg5Top" src="img/verde/ricarica.svg" alt="XXX"/>
+						</div>
+
+						<label href="#" class="rowDx posBottomA marg10Dx h50p w50p cx clrSfumatoScuro" onclick="annullaModificaCarrello()">
+							<img class="imgPiccola50" src="img/bianche/annulla.svg"/>
+						</label>
+
+						<label href="#" class="rowDx posBottomA marg10Dx h50p w50p cx clrSfumatoScuro" onclick="aggiornaCarrelloDaModifica();">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="posBottomA10p w100 h150p">
+				<div id="divIndispensabile" class="posBottomA160p h30p w50 marg5Top">
+					<input id="chkIndispensabile" name="chkAperti" type="checkbox" class="w30p h30p">
+					<label for="chkIndispensabile" class="intestazione posTop-5p">Indispensabile</label>
+				</div>
+
+				<div id="divPrenotazione" class="posLeftA50 posBottomA160p h30p w50 marg5Top">
+					<input id="chkPrenotazione" name="chkAperti" type="checkbox" class="w30p h30p">
+					<label for="chkPrenotazione" class="intestazione posTop-5p">Prenotazione</label>
+				</div>
+
+				<div id="modNota" class="posBottomA w50 h150p">
+					<div class="has-float-label posBottomA posTopA w100">
+						<textarea id="txtNotaUfficio" placeholder="Nota Ufficio" class="w100-4p posBottomA posTopA h150p"></textarea>
+						<label for="lblNota" >Nota Ufficio</label>
+					</div>
+				</div>
+				<div id="modNota" class="posBottomA posLeftA50 w50 h150p">
+					<div class="has-float-label posBottomA posTopA w100">
+						<textarea id="txtNotaPrelievo" placeholder="Nota Prelievo" class="w100 posBottomA posTopA h150p"></textarea>
+						<label for="lblNota" >Nota Prelievo</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Modal Box Chiusura Ordine -->
+		<div id="modChiusuraOrdine" class="modalQuantitaContainer clrBaseNotrasparenza posTop posBottom">
+			<div class="posTopA w100-10p padSx5 padDx5">
+				<div class="row fasciaIntestazione marg5Top">
+					<h3 id="divIntestazioneCO" class=""></h3> 
+				</div>
+
+				<div id="divMandanteContainer" class="row w100 hide">
+					<div class="row w90p testoNormale padTop5">Mandante</div>
+					<div id="divMandante" class="row h40p testoTroncato w100-130p testoGrassetto padTop5 cel"></div>
+				</div>
+				
+				<div class="row w90p testoNormale padTop5">Cliente</div>
+				<div id="divCliente" class="row h40p testoTroncato w100-130p testoGrassetto padTop5 cel"></div>
+				<img id="cmdDati" class="row w30p pulsantiNoSfondo" src="img/bianche/down.svg" alt="" onclick="mostraNascondiElemento('divAltriDatiCliente','hide',this)"></img>
+			</div>
+				
+			<div id="divDatiOrdine" class="posTopA100p posBottomA165p clrBaseNotrasparenza w100-10p padSx5 padDx5 scrollY-Auto">
+				<div class="row w100">
+					<div class="row w100 margBottomFlex">
+						<div id="divAltriDatiCliente" class="row w100 hide">
+							<div class="row w90p testoNormale">Indirizzo</div>
+							<div id="divIndirizzo" class="row w100-90p testoNormale cel"></div>
+							<div class="row w90p testoNormale">P.Iva</div>
+							<div id="divPIva" class="row w100-90p testoNormale cel"></div>
+							<div class="row w90p testoNormale">C.F.</div>
+							<div id="divCF" class="row w100-90p testoNormale cel"></div>
+							<div class="row w90p testoNormale">SDI</div>
+							<div id="divSDI" class="row w100-90p testoNormale cel"></div>
+							<div class="row w90p testoNormale">PEC</div>
+							<div id="divPEC" class="row w100-90p testoNormale cel"></div>
+						</div>
+					</div>
+					<div class="row col6" onkeyup="aggiornaDestinazione()">
+						<div class="row has-float-label w100-40p">
+							<input id="txtDestinazione" type="text" class="w100-10p" placeholder="Destinazione" maxlength="100">
+							<label for="txtDestinazione" >Destinazione</label>
+						</div>
+						<img id="cmdDatiDest" class="row w30p pulsantiNoSfondo" src="img/bianche/down.svg" alt="" onclick="mostraNascondiElemento('divDestinazione','hide',this)"></img>
+						<div id="divDestinazione" class="row w100 hide">
+							<div id="divIdDestinazione" class="row w90p testoNormale padTop5 hide"></div>
+							<div class="row w90p testoNormale cel">
+								<div id="cmdDest" class="row w30p" onclick="apriDestinazioni()">
+									<img src="img/grafiche/globe.svg" title="Apri Destinazioni Diverse" alt="" class="h40p marg15Sx">
+								</div> 
+							</div>
+							<div class="has-float-label w100-90p">
+								<input id="txtIndirizzoDest" type="text" class="w100-10p" placeholder="Indirizzo" maxlength="100">
+								<label for="txtIndirizzoDest" >Indirizzo</label>
+							</div>
+							<div class="row w90p testoNormale cel">
+								<div id="cmdDestP" class="row w30p" onclick="pulisciDestinazione()">
+									<img src="img/bianche/add-location.svg" title="Aggiungi Destinazione Diversa" alt="" class="h40p marg15Sx">
+								</div>
+							</div>
+							<div class="row w100-90p">
+								<div class="has-float-label row w50">
+									<input id="txtLocalita" type="text" class="w100-10p" placeholder="Località" maxlength="100">
+									<label for="txtLocalita" >Località</label>
+								</div>
+								<div class="has-float-label row w30">
+									<input id="txtCAP" type="text" class="w100-10p" placeholder="CAP" maxlength="5">
+									<label for="txtCAP" >CAP</label>
+								</div>
+								<div class="has-float-label row w20">
+									<input id="txtProv" type="text" class="w100-20p" placeholder="Prov." maxlength="2">
+									<label for="txtProv" >Prov.</label>
+								</div>
+							</div>
+							<div class="row w90p testoNormale cel"></div>
+							<div class="row w100-90p">
+								<div class="has-float-label row w50">
+									<input id="txtTel" type="text" class="w100-10p" placeholder="Telefono">
+									<label for="txtTel" >Telefono</label>
+								</div>
+								<div class="has-float-label row w50">
+									<input id="txtFax" type="text" class="w100-10p" placeholder="Fax">
+									<label for="txtFax" >Fax</label>
+								</div>
+							</div>
+							<div id="divDestPredefinita" class="row w100 marg5Top">
+								<input id="chkDestPredefinita" name="chkAperti" type="checkbox" class="w30p h30p">
+								<label for="chkDestPredefinita" class="intestazione posTop-5p">Utilizza Sempre Questa Destinazione per Questo Utente</label>
+							</div>
+						</div>
+					</div>
+				</div>
+                <div class="row w100 hide" id="statoOrdine">
+                    <div class="row fasciaIntestazione marg10Top">
+						<h3 class="">STATO ORDINE</h3> 
+					</div>	
+                    <div class="row w100">
+                        <label for="chkUrgente" id="lblchkUrgente" class="row w100 intestazione">
+                            <div class="w100 padTop5">
+                                <span class="testo20 clrTestoRosso">Urgente</span>
+                                <input id="chkUrgente" name="chkUltimato" descrizione="Ultimato" type="checkbox" class="row w25p h25p clrSfumatoChiaro marg10Dx toggle-button" onchange="">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+				<div id="divMetodoPagamento">
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">METODO DI PAGAMENTO</h3> 
+					</div>	
+					<div class="row col4 margBottomFlex">
+						<div class="row w100">
+							<div class="row w90p testoNormale">Pagamento</div>
+							<div id="divPagamento" class="row w100-90p testoGrassetto"></div>
+						</div>
+						<div class="row col4">
+							<div class="row w90p testoNormale">Fido</div>
+							<div id="divFido" class="row w100-90p testoGrassetto"></div>
+						</div>
+						<div id="contSaldo" class="row col4">
+							<div class="row w90p testoNormale">Saldo</div>
+							<div id="divSaldo" class="row w100-90p testoGrassetto"></div>
+						</div>
+					</div>
+                    <!-- <div class="row col4 margBottomFlex">
+                        <div id="paypal-button-container" onclick="avviaPagamentoPayPal()" class="h80p w100"></div>
+                    </div> -->
+					<div class="row col4">
+						<div id="divPagamentoM" name="divPagamento" class="row has-float-label w100">
+							<span class="selectDefault" id="1">Seleziona Pagamento</span>
+							<label for="cmbPagamento" >Pagamento Proposto</label>
+							<select id="cmbPagamento" name="cmbPagamento" class="selectBox" onchange="changeSelect(this)">
+								<option value="0">Seleziona Pagamento</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div id="divDatiConsegna">
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">DATI PER LA CONSEGNA</h3> 
+					</div>	
+					<div class="row col4">
+						<div id="divMezzo" name="divMezzo" class="row has-float-label w100">
+							<span class="selectDefault" id="0">Seleziona Mezzo Trasporto</span>
+							<label for="cmbMezzo" >Mezzo di Trasporto</label>
+							<select id="cmbMezzo" name="cmbMezzo" class="selectBox" onchange="changeSelect(this)">
+								<option value="-1">Seleziona Mezzo di Trasporto</option>
+							</select>
+						</div>
+					</div>
+					<div class="row col4">
+						<div id="divVettore" name="divPagamento" class="row has-float-label w100">
+							<span class="selectDefault" id="0">Seleziona Vettore</span>
+							<label for="cmbVettore" >Vettore</label>
+							<select id="cmbVettore" name="cmbVettore" class="selectBox" onchange="changeSelect(this)">
+								<option value="0">Seleziona Vettore</option>
+							</select>
+						</div>
+					</div>
+					<div class="row col4">
+						<div class="row datePikerContainer">
+							<div id="divDataSpedizione" name="divDataSpedizione" class="has-float-label datePiker">
+								<input id="txtDataSpedizione" name="txtDataSpedizione" type="date" onChange="txtDataChange(this);" value="">
+								<label for="txtDataSpedizione" >Data Spedizione</label>
+							</div>
+						</div>
+						
+						<div class="row datePikerContainer">
+							<div id="divDataConsegna" name="divDataConsegna" class="has-float-label datePiker">
+								<input id="txtDataConsegna" name="txtDataConsegna" type="date" onChange="txtDataChange(this);" value="">
+								<label for="txtDataConsegna" >Data Consegna Richiesta</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="datiSpese">
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">SPESE</h3> 
+					</div>	
+					<div class="has-float-label row w170p">
+						<input id="txtTrasporto" type="number" inputmode="decimal" placeholder="Spese Trasporto" class="testoNormale" onkeyup="aggiornaSpese('txtTrasporto')">
+						<label for="lblTrasporto" >Spese Trasporto</label>
+					</div>
+					<div class="has-float-label row w170p">
+						<input id="txtSpese" type="number" inputmode="decimal" placeholder="Spese Accessorie" class="testoNormale" onkeyup="aggiornaSpese('txtSpese')" disabled >
+						<label for="lblSpese" >Spese Accessorie</label>
+					</div>
+				</div>
+
+				<div id="datiScCassa">
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">SCONTI</h3> 
+					</div>	
+					<div class="has-float-label row w170p">
+						<input id="txtScCassa" type="number" inputmode="decimal" placeholder="Sconto %" class="testoNormale" onkeyup="aggiornaScontoCassa()">
+						<label for="lblScCassa" >Sconto %</label>
+					</div>
+				</div>
+
+				<div id="Note" onkeyup="aggiornaDestinazione()">
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">NOTE</h3> 
+					</div>		
+					<div id="divNoteG" class="has-float-label row col3 hide">
+						<textarea id="txtNoteG" type="text" placeholder="Note" class="testoNormale h80p" onkeyup="aggiornaTestata()"></textarea>
+						<label for="txtNoteG" >Note</label>
+					</div>
+					<div id="divNoteU" class="has-float-label row col3">
+						<textarea id="txtNoteU" type="text" placeholder="Note Ufficio" class="testoNormale h80p" onkeyup="aggiornaTestata()"></textarea>
+						<label for="txtNoteU" >Note Ufficio</label>
+					</div>
+					<div id="divNoteM" class="has-float-label row col3">
+						<textarea id="txtNoteM" type="text" placeholder="Note Magazzino" class="testoNormale h80p" onkeyup="aggiornaTestata()"></textarea>
+						<label for="txtNoteM" >Note Magazzino</label>
+					</div>
+					<div id="divNoteV" class="has-float-label row col3">
+						<textarea id="txtNoteV" type="text" placeholder="Note Vettore" class="testoNormale h80p" onkeyup="aggiornaTestata()"></textarea>
+						<label for="txtNoteV" >Note Vettore</label>
+					</div>
+				</div>
+				<div id="DivDatiOrdineCliente">
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">DATI ORDINE CLIENTE</h3> 
+					</div>	
+					
+					<div class="has-float-label row w250p">
+						<input id="txtOrdineCli" placeholder="Numero Ordine Cliente" class="testoNormale" onchange="txtDataChange(this);">
+						<label for="txtOrdineCli" >Numero Ordine Cliente</label>
+					</div>
+					<div class="row datePikerContainer">
+						<div id="divDataOrdineCli" name="divDataOrdineCli" class="has-float-label datePiker">
+							<input id="txtDataOrdineCli" name="txtDataOrdineCli" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataOrdineCli" >Data Ordine cliente</label>
+						</div>
+					</div>
+				</div>
+
+				<div id="divIndispensabili" class="w100">	
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">ARTICOLI INDISPENSABILI</h3> 
+					</div>	
+					<ul id="elencoIndispensabili" name="elencoIndispensabili" class="row w100-5p scroolYHidden">
+					
+					</ul>
+				</div>
+				<div id="divPrenotati" class="w100">	
+					<div class="row fasciaIntestazione marg10Top">
+						<h3 class="">ARTICOLI PRENOTATI</h3> 
+					</div>	
+					<ul id="elencoPrenotati" name="elencoPrenotati" class="row w100-5p scroolYHidden">
+					
+					</ul>
+				</div>
+			</div>
+			
+			<div id="datiTotali" class="posBottomA75p w100-10p clrBaseNotrasparenza w100-10p padSx5 padDx5">
+				<div class="row fasciaIntestazione">
+					<h3 class="">TOTALI DOCUMENTO</h3> 
+				</div>	
+				<div class="row w30">
+					<div class="row w100 testoNormale cx">Imponibile</div>
+					<div id="divCOTotImp" class="row w100 testoGrassetto cx">0,00</div>
+				</div>
+				<div class="row w30">
+					<div class="row w100 testoNormale cx">Iva</div>
+					<div id="divCOTotIva" class="row w100 testoGrassetto cx">0,00</div>
+				</div>
+				<div class="row w40">
+					<div class="row w100 testoNormale cx">Documento</div>
+					<div id="divCOTotDoc" class="row w100 testoGrassetto cx">0,00</div>
+				</div>
+			</div>
+
+			<div class="posBottomA5p w100 pulsantiera">
+				<label id="cmdOk" name="cmdOk" class="w50" title="Procedi" onclick="salvaCarrelloSuServer()"><img src="img/bianche/ok.svg"/></label>
+				<label id="cmdAnnulla" name="cmdAnnulla" class="w50" title="Annulla" onclick="document.getElementById('modChiusuraOrdine').style.display='none'"><img src="img/bianche/annulla.svg" /></label>
+			</div>
+		</div>
+
+		<div id="divBaseA" class="posTop posBottom clrSfumatoChiaro w100NI">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="row w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a id="cmdBack" name="cmdBack" href="#" onclick="clickBack()"><img class="imgPiccola w60p" src="img/bianche/back.svg" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()"/>	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>
+				<label id="lblRicArtDen" class="row w80p dx marg5Dx marg2Top clrTestoNero hide" for="txtRicercaArticolo" >Ricerca Prodotto</label>
+				<div id="divRicercaArticoli" name="divRicercaArticoli" class="row has-float-label w50 marg5Top">
+					<input id="txtRicercaArticolo" maxlength="50" name="txtRicercaArticolo" type="text" placeholder="Ricerca Prodotto ..." onkeyup="txtRicercaChange(this,'txtRicercaArticolo','elencoArticoli','ListaArticoli.html',0);">
+					<span class="deleteicon" onclick="var input = getElementById('txtRicercaArticolo'); input.value = ''; input.focus(); txtRicercaChange(input,'txtRicercaArticolo','elencoArticoli','ListaArticoli.html',0);"></span>
+					<label for="txtRicercaArticolo" >Ricerca Prodotto ...</label>
+				</div>
+				<button id="cmdBarCode" class="row w40p h42p pulsante clrTestoBianco marg5Top padSx5" title="Avvia Lettore BarCode" onclick="apriLettoreBarCode('txtRicercaBarCode','avviaRicercaLettoreBarcode','barcode')">
+					<img class="row w30p posTopA" src="img/bianche/barcode.svg">	
+				</button>
+				<button id="cmdBarCodeDel" class="row w40p h42p pulsante clrTestoBianco marg5Top padSx5 hide" title="Cancella Ricerca Codice a Barre" onclick="var input = getElementById('txtRicercaArticolo'); input.focus(); txtRicercaChange(input,'txtRicercaArticolo','elencoArticoli','ListaArticoli.html',0);">
+					<img class="w30p posTopA5p" src="img/bianche/barcode.svg">
+					<img class="posTopR-25p posLeftA w30p zIndex3" src="img/rosse/annulla.svg">	
+				</button>
+				<div id="divRicercaArticoliF" name="divRicercaArticoli" class="row has-float-label marg5Sx w50-45p marg5Top">
+					<input id="txtRicercaArticoloF" maxlength="50" name="txtRicercaArticolo" type="text" placeholder="Codice Fornitore ..." onkeyup="txtRicercaChange(this,'txtRicercaArticoloF','elencoArticoli','ListaArticoli.html',0);">
+					<span class="deleteicon" onclick="var input = getElementById('txtRicercaArticoloF'); input.value = ''; input.focus(); txtRicercaChange(input,'txtRicercaArticoloF','elencoArticoli','ListaArticoli.html',0);"></span>
+					<label for="txtRicercaArticoloF" >Codice Fornitore ...</label>
+				</div>
+			</div>
+			
+			<div id="divCorpo" class="posTopA117p posBottomA100p padSx5 w100-10p">			
+				<ul id="elencoArticoli" name="elencoArticoli" class="w100 posTopA posBottomA5p" onscroll="elencoArticoliScroll(this,'ListaArticoli.html','txtRicercaArticolo')">
+					
+				</ul>
+			</div>
+	
+			<div id="divPiede" class="posBottomA w100">
+				<div id="divTotale" name="divTotale" class="h40p w100 row clrScuro">
+					<div id="divContCLIENTE" class="row w50 h40p intestazione padTop6">
+						<div id="CLIENTE" class="w95 h40p testoTroncato1"></div>
+					</div>
+					<div id="divContImportoTotale" class="row w50-10p h40p intestazione dx padTop6">
+						<div id="divImportoTotale" class="w95 padDx10">€ 0,00</div>
+					</div>
+				</div>	
+	
+				<div id="pulsantieraPiede" class="pulsantieraDescrizione">
+                    <label id="cmdModalLink" name="cmdModalLink" onclick="modalLinkRapido()" href="#" class="w20 hide h65p" title="Modifica link rapidi">
+                        <img src="img/bianche/slideshow.svg"  style="height: 30px; width:30px; padding: 4px 0px 2px 0px;">
+                        <div class="testoTroncato1 normale testoPulsantiera">
+                                Slide Show
+                        </div>
+                    </label>
+                    <label id="cmdQrCode" name="cmdQrCode" href="#" class="w20 h65p hide" title="Qr Code" onclick="apriLettoreBarCode('txtRicercaBarCode','avviaRicercaLettoreBarcode','qrCode')">
+                        <img src="img/bianche/qr-code.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                        <div class="testoTroncato1 normale testoPulsantiera">
+                            QR Code
+                        </div>
+                    
+                    </label>
+					<label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" href="#" class="w25 h65p" title="Filtro Prodotti">
+                            <img src="img/bianche/filter.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div class="testoTroncato1 normale testoPulsantiera">
+                                Filtri
+                            </div>
+                        
+                    </label>
+					<label id="cmdRimuoviFiltri" name="cmdRimuoviFiltri"  href="#" class="w25 h65p" title="Rimuovi Filtri" onclick="eliminaTuttiFiltri(this)">
+						<img src="img/grafiche/eliminaFiltro.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;">
+						<div class="testoTroncato1 normale testoPulsantiera">
+							Elimina Filtri
+						</div>
+					</label>
+					<label id="cmdCatalogo" name="cmdCatalogo" href="#" class="w25 h65p" title="Stampa Catalogo" onclick="stampaCatalogoPDF()">
+                            <img src="img/bianche/pdf.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div class="testoTroncato1 normale testoPulsantiera">
+                                Stampa
+                            </div>
+                        
+                    </label>
+					<a id="cmdCarrello" name="cmdCarrello" href="#" class="w25 h65p"  title="Chiudi Ordine" onclick="apriCarrello()">
+                            <img src="img/bianche/carrello.svg" style="height: 30px; width:30px; padding: 4px 0px 2px 0px;"/>
+                            <div class="testoTroncato1 normale testoPulsantiera">
+                                Carrello
+                            </div>
+                        
+                    </a>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/carrello.js?ver=5.1"></script>
+		<script src="js/ListaArticoli.js?ver=5.1"></script>
+    </body>
+</html>

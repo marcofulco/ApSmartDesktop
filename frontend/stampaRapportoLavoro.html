@@ -1,0 +1,76 @@
+<html lang="it">
+    <head>
+        <meta name="viewport"
+            content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy"
+            content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+        <meta name="description" content="Produzione">
+
+        <link rel="apple-touch-icon" href="img/icona152.png">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="application-name" content="Produzione" />
+        <meta name="msapplication-TileImage" content="img/icona144.png">
+        <meta name="msapplication-TileColor" content="#4B7A46">
+        <link rel="manifest" href="manifest.json">
+        <meta name="theme-color" content="#4B7A46" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+        <title id="titolo">Stampa Rapporto di Lavoro</title>
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <script src="config/config.js"></script>
+        <script src="js/script.js?ver=3.0"></script>
+    </head>
+
+    <body class="clrBase">
+        <div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+            <div id="divTesta" class="posTopA w100">
+                <div id="divTestaSuperiore" class="w100 clrBase h60p textureLogo">
+                    <div class="row w10">
+                        <div class="w60p">
+                            <a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" onclick="esci()" /></a>
+                        </div>
+                    </div>
+
+                    <div class="row intCent padSx10">
+                        <img id="logoIntestazione" class="logoOrizzontale"
+                            src="img/aziendapratica/aziendapratica-bianco.svg"
+                            onclick="goMainPage()" />
+                    </div>
+
+                    <label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+                </div>
+
+                <div class="row fasciaIntestazione">
+                    <h3 id="lblIntestazione" name="lblIntestazione" class="testoTroncato1 cx">STAMPA RAPPORTO DI LAVORO</h3>
+                </div>
+
+
+            </div>
+
+            <div id="divCorpo" class="posTopA110p posBottomA60p padSx5 w100-10p scrool">
+                <div class="row w100 marg5Top">
+                    <div class="col6">
+                        <div id="divAnno" name="divAnno" class="row has-float-label col2 marg5Top">
+                            <input id="txtAnno" maxlength="50" name="txtAnno" type="text" placeholder="Anno ..." spellcheck="false" data-ms-editor="true">
+                            <span class="deleteicon" onclick="var input = getElementById('txtAnno'); input.value = ''; input.focus();"></span>
+                            <label for="txtAnno">Anno ...</label>
+                        </div>
+                        <div id="divRicerca" name="divRicerca" class="row has-float-label col6-40p marg5Top">
+                            <input id="txtRicerca" maxlength="50" name="txtRicerca" type="text" placeholder="Numero Sk. Assistenza ..." spellcheck="false" data-ms-editor="true">
+                            <span class="deleteicon" onclick="var input = getElementById('txtRicerca'); input.value = ''; input.focus();"></span>
+                            <label for="txtRicerca">Numero Sk. Assistenza ...</label>
+                        </div>
+                        <button id="cmdStampa" class="row w40p h42p pulsante clrTestoBianco marg5Top padSx5 btnCustom"
+                            title="Stampa" onclick="stampaFoglioProduzione()">
+                            <img class="row w30p posTopA" src="img/bianche/pdf.svg">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/stampaRapportoLavoro.js"></script>
+    </body>
+</html>

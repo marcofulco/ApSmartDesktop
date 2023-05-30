@@ -1,0 +1,116 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Lista Clienti">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Estratto Conto</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+		<script src="componenti/elementiEstrattoConto.js"></script>
+		<script src="componenti/elementiDettagliDocumenti.js"></script>
+		<script src="componenti/modalECDocumenti.js"></script>
+		<script src="componenti/elementiDettagliIncassi.js"></script>
+		<script src="componenti/modalECIncassi.js"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="row w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#" onclick="tornaIndietro()"><img class="imgPiccola w60p" src="img/bianche/back.svg" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()"/>	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>
+				
+				<div class="row fasciaIntestazione">
+					<h3 id="lblIntestazione" name="lblIntestazione" class="testoTroncato1 cx">ESTRATTO CONTO</h3> 
+				</div>
+
+				<div class="row w100">
+					<div class="row datePikerContainer">
+						<div id="divDataDa" name="divDataDa" class="has-float-label datePiker">
+							<input id="txtDataDa" name="txtDataDa" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataDa" >da Data</label>
+						</div>
+					</div>
+					
+					<div class="row datePikerContainer">
+						<div id="divDataA" name="divDataA" class="has-float-label datePiker">
+							<input id="txtDataA" name="txtDataA" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataA" >a Data</label>
+						</div>
+					</div>
+
+					<div class="row h30p w120p marg5Bottom">
+						<input id="chkAperti" name="chkAperti" type="checkbox" class="w30p h30p" onclick="avviaCarDati();">
+						<label for="chkAperti" class="intestazione posTop-5p clrTestoNero">Aperti</label>
+					</div>
+
+					<div class="row h30p w180p marg5Bottom">
+						<input id="chkNoDDT" name="chkNoDDT" type="checkbox" class="w30p h30p" onclick="avviaCarDati();">
+						<label for="chkNoDDT" class="intestazione posTop-5p clrTestoNero">Escludi DDT</label>
+					</div>
+				</div>
+
+				<div class="row intestazioneGriglie clrScuro w100 h30p padTop10">
+					<div class="row hGrande w50">Descrizione</div>
+					<div class="row w25 hPiccolo">Tipo Documento</div>
+					<div class="row w15 hPiccolo cx">Data</div>
+					<div class="row w15 hPiccolo cx">Numero</div>
+					<div class="row w15 hPiccolo cx">a Credito</div>
+					<div class="row w15 hPiccolo cx">a Debito</div>
+					<div class="row w15 hPiccolo cx">Progressivo</div>
+					<div class="row w25 hGrande cx">Importo</div>
+					<div class="row w25 hGrande cx">Progressivo</div>
+				</div>
+			</div>
+			
+			<div id="divCorpo" class="posBottomA95p posTopAFlexEc w100-5p marg5Sx">			
+				<ul id="elencoEC" name="elencoEC" class="ulElenco posTopA5p posBottomA5p elencoR2 w100-5p" onscroll="elencoECScroll(this,'ListaClienti.html')">
+					
+				</ul>
+			</div>
+
+			<div id="divPiede" class="posBottomA w100">
+				<div class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle">
+					<div class="row hGrande w70-10p dx">Totali</div>
+					<div class="row hPiccolo w55-10p dx">Totali</div>
+					<div id="dare" class="row w15 hPiccolo dx"></div>
+					<div id="avere" class="row w15 hPiccolo dx"></div>
+					<div id="saldoG" class="row w15 hPiccolo dx"></div>
+					<div id="saldoP" class="row w30 hGrande dx"></div>
+				</div>
+
+				<div id="cmdBottom" class="row w100 h60p">
+					<div class="pulsantiera">
+						<label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" class="w33" title="Filtri"><img src="img/bianche/filter.svg" /></label>
+						<label id="cmdOrdinamento" name="cmdOrdinamento" for="nav-toggleL" class="w33" title="Ordinamento"><img src="img/bianche/sort.svg" /></label>
+						<label id="cmdPdf" name="cmdPdf" for="nav-toggleP" class="w34" title="Genera PDF" onclick="avviaCarDati(true,'report')"><img src="img/bianche/pdf.svg" /></label>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/estrattoConto.js"></script>
+    </body>	
+</html>

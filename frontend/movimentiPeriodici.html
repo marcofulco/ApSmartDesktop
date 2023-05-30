@@ -1,0 +1,289 @@
+<html lang="it">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, width=device-width, height=device-height, viewport-fit=cover">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https: http: 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' * https://*.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: https: http: content:;">
+		<meta name="description" content="Movimenti Periodici">
+		
+		<link rel="apple-touch-icon" href="img/icona152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="application-name" content="Presa Ordini" />
+		<meta name="msapplication-TileImage" content="img/icona144.png"> 
+		<meta name="msapplication-TileColor" content="#4B7A46">
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#4B7A46"/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>Documenti Emessi</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="config/config.js"></script>
+		<script src="js/script.js?ver=3.0"></script>
+		<script src="componenti/elementiMovimentiPeriodici.js"></script>
+		<script src="componenti/modalECDocumenti.js"></script>
+		<script src="componenti/elementiListaClientiFiltro.js"></script>
+		<script src="componenti/elementiFiltriSceltaMultipla.js"></script>
+		<script src="componenti/elementiOrdinamento.js"></script>
+	</head>
+	<body class="clrBase">
+		<div id="divBase" class="posTop posBottom clrSfumatoChiaro w100">
+			<div id="divTesta" class="posTopA w100">
+				<div id="divTestaSuperiore" class="w100 clrBase h60p textureLogo">
+					<div class="row w10">
+						<div class="w60p">
+							<a href="#"><img class="imgPiccola w60p" src="img/bianche/back.svg" onclick="clickBack()" /></a>
+						</div>
+					</div>
+					
+					<div class="row intCent padSx10">
+						<img id="logoIntestazione" class="logoOrizzontale" src="img/aziendapratica/aziendapratica-bianco.svg" onclick="goMainPage()" />	
+					</div>
+					
+					<label id="userImg" class="rowDx userImg" for="nav-toggle"></label>
+				</div>	
+
+				<div class="row fasciaIntestazione">
+					<h3 id="lblIntestazione" name="lblIntestazione" class="testoTroncato1 cx">ELENCO DOCUMENTI EMESSI</h3> 
+				</div>
+				
+				<div class="row w100 marg5Top">
+					<div class="row datePikerContainer">
+						<div id="divDataDa" name="divDataDa" class="has-float-label datePiker">
+							<input id="txtDataDa" name="txtDataDa" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataDa" >da Data</label>
+						</div>
+					</div>
+					
+					
+					<div class="row datePikerContainer">
+						<div id="divDataA" name="divDataA" class="has-float-label datePiker">
+							<input id="txtDataA" name="txtDataA" type="date" onChange="txtDataChange(this);" value="">
+							<label for="txtDataA" >a Data</label>
+						</div>
+					</div>
+
+					<div id="cmdAggiorna" class="row pulsantiNoSfondo">
+						<a href="#" title="Aggiorna Dati" onclick="avviaCarDettagliDocumenti();"><img class="w30p" src="img/Nere/refresh.svg"></a>
+					</div>
+				</div>
+
+				<div class="row intestazioneGriglie clrScuro w100 h30p padTop10 tableStyle">
+					<div class="row w50-25p hGrande cx">Descrizione</div>
+					<div class="row w25-25p hPiccolo cx">Tipo Documento</div>
+					<div class="row w15 hPiccolo cx">Data</div>
+					<div class="row w15 hPiccolo cx">Numero</div>
+					<div class="row w15 hPiccolo cx">Imponibile</div>
+					<div class="row w15 hPiccolo cx">Iva</div>
+					<div class="row w15 hPiccolo cx">Totale</div>
+					<div class="row w25 hGrande cx">Imponibile</div>
+					<div class="row w25 hGrande cx">Totale</div>
+				</div>
+			</div>
+			
+			<div id="divCorpo" class="posTopA213p posBottomA100p padSx5 w100-10p">
+				<ul id="elencoEC" name="elencoEC" class="ulElenco posTopA5p posBottomA5p elencoR2 w100-5p elencoBase" onscroll="elencoECScroll(this,'ListaClienti.html')">
+					
+				</ul>
+			</div>
+
+			<div id="divPiede" class="posBottomA w100">
+				<div class="row intestazioneGriglie clrScuro w100 h35p padTop10 tableStyle">
+					<div class="row hGrande dx" style="width: calc(50% - 10px);">Tot. per <span id="nrP"></span> Doc. <span id="mediaP"></span></div>
+					<div class="row hPiccolo dx" style="width: 52.5%;">Totali per <span id="nr"></span> Documenti <span id="media"></span></div>
+					<div id="imponibile" class="row w15 hPiccolo dx"></div>
+					<div id="imponibileG" class="row w25 hGrande dx"></div>
+					<div id="iva" class="row w15 hPiccolo dx"></div>
+					<div id="saldoG" class="row w15 hPiccolo dx"></div>
+					<div id="saldoP" class="row w25 hGrande dx"></div>
+					<div id="tUtile" class="row w98 testo10 dx"></div>
+				</div>
+
+				<div id="cmdBottom" class="row w100 h60p">
+					<div class="pulsantiera">
+						<label id="cmdFiltri" name="cmdFiltri" for="nav-toggleF" href="#" class="w25" title="Filtro Prodotti"><img src="img/bianche/filter.svg" /></label>
+						<label id="cmdOrdinamento" name="cmdOrdinamento" for="nav-toggleL" class="w25" title="Ordinamento"><img src="img/bianche/sort.svg" /></label>
+						<label id="cmdPdf" name="cmdPdf" for="nav-toggleP" class="w25" title="Genera PDF" onclick="avviaCarDettagliDocumenti(true,'report')"><img src="img/bianche/pdf.svg" /></label>
+						<label id="cmdModalitaFirma" name="cmdModalitaFirma" class="w25" title="Attiva Modalità Firma Documenti" onclick="modalitaFirma();"><img src="img/bianche/firma.svg" /></label>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<input type="checkbox" id="nav-toggleL" hidden>
+        <nav id="navL" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="row navTesta w100">
+				<div class="row fasciaIntestazione">
+					<h3 class="">Modifica Ordinamento</h3> 
+				</div>
+			</div>
+
+			<div class="posTopA52p posBottomA60p navCorpo w100">
+				<ul id="elencoOrdinamento" name="elencoOrdinamento" class="posTopA posBottomA5p elencoR1 w100">
+					
+				</ul>
+			</div>
+
+			<div class="posBottomA5p navPiede w100 intestazione clrScuro h60p">
+				<div id="lblOrdinamento" class="row w100-60p marg5Top testoTroncato h60p cel"></div>
+				<div class="rowDx w60p clrSfumatoScuro" onclick="cambiaOrdinamento()">
+					<img class="imgPiccola50 marg10Sx marg10Dx marg5Top" src="img/bianche/ok.svg" alt="">
+				</div>
+			</div>
+		</nav>
+
+		<input type="checkbox" id="nav-toggleF" hidden>
+        <nav id="navF" class="nav navDocumenti clrSfumatoChiaro">
+			<div class="navTesta w100 posTopA5p">
+				<div id="tabLink" name="tabLink" class="tablink-content">
+					<button class="tablinkColonne intestazione" id="tabCliente" onclick="openPage('Cliente', this)">Cliente</button>
+					<button class="tablinkColonne intestazione" id="tabAgente" onclick="openPage('Agente', this)">Agente</button>
+					<button class="tablinkColonne intestazione" id="tabTipo" onclick="openPage('Tipo', this)">Tipo</button>
+					<button class="tablinkColonne intestazione" id="tabNumero" onclick="openPage('Numero', this)">Numero</button>
+                    <button class="tablinkColonne intestazione" id="tabAltro" onclick="openPage('Altro', this)">Altro</button>
+				</div>
+			</div>
+			
+			<div class="navCorpo w100 posTopA58p posBottomA">
+				<div hMeno="165" id="Cliente" name="Cliente" class="tabcontent w100 posTopA posBottomA">	
+					<div id="divRicercaCliente" name="divRicercaCliente" class="row has-float-label w100">
+						<input id="txtRicercaCliente" name="txtRicercaCliente" type="text" placeholder="Ricerca Cliente ..." onkeyup="txtRicercaChange(this,'txtRicercaCliente','elencoClienti','',2);">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaCliente'); input.value = ''; input.focus(); txtRicercaChange(input,'txtRicercaCliente','elencoClienti','',2);"></span>
+						<label for="txtRicercaCliente" >Ricerca Cliente ...</label>
+					</div>
+	
+					<ul id="elencoCliente" name="elencoCliente" class="ulNavElenco elencoR3 w100 posTopA52p posBottomA100p" onscroll="elencoClientiScroll(this)">
+						
+					</ul>
+
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroCliente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroCliente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="165" id="Agente" name="Agente" class="tabcontent w100 posTopA posBottomA">
+					<div id="divRicercaAgente" name="divRicercaAgente" class="has-float-label w100">
+						<input id="txtRicercaAgente" name="txtRicercaAgente" type="text" placeholder="Ricerca Agente ..." onkeyup="ricercaSuHtml('txtRicercaAgente','elencoAgente');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaAgente'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaAgente','elencoAgente');"></span>
+						<label for="txtRicercaAgente" >Ricerca Agente ...</label>
+					</div>
+		
+					<ul id="elencoAgente" name="elencoAgente" class="elencoR1 w100  posTopA52p posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<div class="intestazione clrScuro h40p w100 posBottomA50p">
+							<div id="lblFiltroAgente" class="row w100-40p marg5Top testoTroncato1">Selezione:</div>
+							<div class="rowDx w30p marg10Dx"><a href="#" onclick="eliminaFiltroAgente()"><img class="imgPiccola30Dx marg5Top" src="img/grafiche/eliminaFiltro.svg" alt=""></a></div>
+						</div>
+	
+						<div class="w100 posBottomA">
+							<label for="nav-toggleF" href="#" class="rowDx h50p w50p posTopA2p cx clrSfumatoScuro">
+								<img class="imgPiccola50" src="img/bianche/ok.svg" />
+							</label>
+						</div>
+					</div>
+				</div>
+	
+				<div hMeno="165" id="Tipo" name="Tipo" class="tabcontent w100 posTopA posBottomA">
+					<!-- <div id="divRicercaTipo" name="divRicercaTipo" class="has-float-label w100">
+						<input id="txtRicercaTipo" name="txtRicercaStatoOrdine" type="text" placeholder="Ricerca Tipo Documento ..." onkeyup="ricercaSuHtml('txtRicercaTipo','elencoTipo');">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaTipo'); input.value = ''; input.focus(); ricercaSuHtml('txtRicercaTipo','elencoTipo');"></span>
+						<label for="txtRicercaTipo" >Ricerca Tipo Documento ...</label>
+					</div> -->
+		
+					<ul id="elencoTipo" name="elencoTipo" class="elencoR1 w100  posTopA posBottomA100p">
+						
+					</ul>
+					
+					<div class="w100 posBottomA5p">
+						<label for="nav-toggleF" href="#" class="rowDx h50p w50p posTopA2p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+	
+				<div id="Numero" name="Numero" class="tabcontent w100 posTopA posBottomA">	
+					<div id="divRicercaNumeroDa" name="divRicercaNumeroDa" class="row has-float-label w60">
+						<input id="txtRicercaNumeroDa" name="txtRicercaNumeroDa" type="number" placeholder="Numero Da ..." onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaNumeroDa'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaNumeroDa" >Numero Da ...</label>
+					</div>
+					<div id="divRicercaSerieDa" name="divRicercaSerieDa" class="row has-float-label w40">
+						<input id="txtRicercaSerieDa" name="txtRicercaSerieDa" type="text" placeholder="Serie Da ..."  onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaSerieDa'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaSerieDa" >Serie Da ...</label>
+					</div>
+	
+					<div id="divRicercaNumeroA" name="divRicercaNumeroA" class="row has-float-label w60">
+						<input id="txtRicercaNumeroA" name="txtRicercaNumeroA" type="number" placeholder="Numero A ..."  onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaNumeroA'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaNumeroA" >Numero A ...</label>
+					</div>
+					<div id="divRicercaSerieA" name="divRicercaSerieA" class="row has-float-label w40">
+						<input id="txtRicercaSerieA" name="txtRicercaSerieA" type="text" placeholder="Serie A ..."  onkeyup="listaDaNumero()">
+						<span class="deleteicon" onclick="var input = getElementById('txtRicercaSerieA'); input.value = ''; input.focus(); listaDaNumero();"></span>
+						<label for="txtRicercaSerieA" >Serie A ...</label>
+					</div>
+					<div class="w100 posTopA170p">
+						<label for="nav-toggleF" href="#" class="rowDx posBottom5p marg5Top h50p w50p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg" />
+						</label>
+					</div>
+				</div>
+                <div id="Altro" name="Altro" class="tabcontent w100 posTopA posBottomA">
+                    <div class="w100 h60p marg10Top">
+                        <div id="divGenereDocumento" name="divGenereDocumento" class="row has-float-label col12">
+                            <span class="selectDefault" id="">Ricerca per genere documento</span>
+                            <label for="slcGDocumento">Genere documento</label>
+                            <select id="slcGDocumento" name="slcGDocumento" class="selectBox" onchange="changeSelect(this);avviaCarDettagliDocumenti(true);elencoStatoDocumento(this)">
+                                <option value="">Ricerca per genere documento</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="w100 h60p">
+                        <div id="divStatoDocumenti" name="divStatoDocumenti" class="row has-float-label col12">
+                            <span class="selectDefault" >Stato documento</span>
+                            <label for="slcStatoDocumento">Stato documento</label>
+                            <select id="slcStatoDocumento" name="slcStatoDocumento" class="selectBox" onchange="changeSelect(this);avviaCarDettagliDocumenti(true)">
+                                <option value="">Ricerca per stato documento</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="h60p" style="width: 280px;">
+                        <div id="divRicercaResponsabile" name="divRicercaResponsabile" class="row has-float-label w100">
+                            <input id="txtRicercaResponsabile" name="txtRicercaResponsabile" type="text" placeholder="Ricerca responsabile" onfocusout="avviaCarDettagliDocumenti(true)">
+                            <span class="deleteicon" onclick="var input = getElementById('txtRicercaResponsabile'); input.value = ''; input.focus();"></span>
+                            <label for="txtRicercaResponsabile">Ricerca responsabile ...</label>
+                        </div>
+                    </div>
+                    <div id="divRicercaPerDataConsegna" name="divRicercaPerDataConsegna" class="row has-float-label w180p marg5Top marg5Sx">
+						<input id="txtRicercaDataConsegna" name="txtRicercaDataConsegna" type="date" placeholder="Data consegna" onkeyup="listaDaNumero()">
+						<label for="txtRicercaDataConsegna" >Data consegna</label>
+					</div>
+                    <div id="divRicercaNoteDocumento" name="divRicercaNoteDocumento" class="row has-float-label w200p marg5Top marg5Sx">
+						<input id="txtRicercaNoteDocumento" name="txtRicercaNoteDocumento" type="text" placeholder="Note documento" onchange="avviaCarDettagliDocumenti(true);">
+                        <span class="deleteicon" onclick="var input = getElementById('txtRicercaNoteDocumento'); input.value = ''; input.focus();"></span>
+						<label for="txtRicercaNoteDocumento" >Note documento</label>
+					</div>
+                    <div class="w100 posBottomA">
+						<label for="nav-toggleF" href="#" class="rowDx posBottom5p marg5Top h50p w50p cx clrSfumatoScuro">
+							<img class="imgPiccola50" src="img/bianche/ok.svg">
+						</label>
+					</div>
+                </div>	
+			</div>
+		</nav>
+
+		<script src="js/movimentiPeriodici.js"></script>
+    </body>
+</html>
