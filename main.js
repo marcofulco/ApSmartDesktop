@@ -1,9 +1,10 @@
-const {app, BrowserWindow,ipcMain} = require('electron')
+const {app, BrowserWindow,ipcMain} = require('electron');
 const path = require('path');
 const { exec } = require('child_process');
-const { autoUpdater } = require('electron-updater')
+const { autoUpdater } = require('electron-updater');
+let win;  // define win at the module level
 const createWindow = () => {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 1600,
         height: 800,
         fullscreen: true,
@@ -17,14 +18,23 @@ const createWindow = () => {
     })
 
     win.loadFile('index.html')
-    autoUpdater.checkForUpdatesAndNotify()
+    
 }
 
 app.whenReady().then(()=>{
     createWindow();
+    autoUpdater.checkForUpdatesAndNotify();
     setInterval(() => {
         autoUpdater.checkForUpdates()
-      }, 60000)
+    }, 60000)
+
+    autoUpdater.on('update-available', () => {
+        win.webContents.send('update_available');
+    });
+    autoUpdater.on('update-downloaded', () => {
+        win.webContents.send('update_downloaded');
+    });
+      
 })
 ipcMain.on('apriTastiera',()=>{
     //aprire tastiera windows con nodejs
@@ -38,12 +48,13 @@ ipcMain.on('apriTastiera',()=>{
       });
     
 })
-// Invia 'update_downloaded' all'interfaccia utente quando un aggiornamento è stato scaricato
-autoUpdater.on('update-downloaded', () => {
-    win.webContents.send('update_downloaded')
-  })
+
+  ipcMain.on('download_update', () => {
+    autoUpdater.downloadUpdate();
+  });
   
-  // Installa l'aggiornamento e riavvia l'app quando l'interfaccia utente lo richiede
   ipcMain.on('restart_app', () => {
-    autoUpdater.quitAndInstall()
-  })
+    console.log("restart_app ricevuto");
+    autoUpdater.quitAndInstall();
+    
+  });

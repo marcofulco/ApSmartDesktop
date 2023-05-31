@@ -6,14 +6,23 @@ function apriTastiraModElectron(){
     }
     
 }
-ipcRenderer.on('update_available', () => {
-    attivaAlert(2,'Attenzione , un nuovo aggiornamento è disponibile');
-  })
-  ipcRenderer.on('update_downloaded', () => {
-    // message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?'
-    // restartButton.style.display = 'block'
-    attivaAlert(2,'Aggiornamento scaricato, verrà installato al riavvio');
-  })
-function restartApp() {
-    window.electronAPI.restartApp()
-  }
+window.electronAPI.onUpdateAvailable(() => {
+    // show notification to the user that an update is available
+    attivaAlert(xTipoAllert.INFORMAZIONE,"Aggiornamento disponibile <br> Download aggiornamento in corso" );
+  });
+  
+  window.electronAPI.onUpdateDownloaded(() => {
+    // show notification to the user that the update has been downloaded
+    attivaAlert(xTipoAllert.INFORMAZIONE,"Aggiornamento scaricato , per installare l'aggiornamento , premere sul pulsante update in alto!");
+    var btn=document.getElementById("btnRiavvia");
+    if(btn!=null){
+        btn.classList.remove("hide");
+    }
+  });
+
+function riavviaApp(){
+    window.electronAPI.restartApp();
+}
+function downloadUpdate(){
+    window.electronAPI.downloadUpdate();
+}
