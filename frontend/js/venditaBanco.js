@@ -2277,7 +2277,12 @@ function elaboraDatiCodiceArticolo(dati, inputBox, lottoTmp = '') {
         inputBox.value = '';
         inputBox.focus();
         if (inputBox.id == 'ricercaPrezzoVeBa') {
-
+            if(document.getElementById('resultRicercaPrezzoVeBa')==null){
+                if (xParametriCassa.emettiSuonoCodiceErrato) {
+                    datiRegCassa('emettiSuono', true)
+                }
+                return;
+            }
             document.getElementById('resultRicercaPrezzoVeBa').innerHTML = '';
             var divRes = `
 <div class="w100 h80p ricercaInvalida " style="margin-top:10px">
