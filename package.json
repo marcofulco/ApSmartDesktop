@@ -1,52 +1,69 @@
 {
-  "name": "apsmart",
-  "version": "1.0.6",
-  "description": "ApSmart Desktop",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dist": "electron-builder --publish always"
-  },
-  "build": {
-    "appId": "app.apSmart.desktop",
-    "productName": "ApSmart",
-    "directories": {
-      "buildResources": "build"
+    "name": "apsmart",
+    "version": "2.2.6",
+    "description": "ApSmart Desktop",
+    "main": "main.js",
+    "scripts": {
+        "test": "electron .",
+        "dist": "electron-builder --publish always"
     },
-    "win": {
-      "icon": "icon/iconaAp.ico",
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
+    "build": {
+        "appId": "app.apSmart.desktop",
+        "productName": "ApSmart",
+        "directories": {
+            "buildResources": "build"
+        },
+        "files": [
+            "**/*",
+            "icon/**/*"
+        ],
+        "extraFiles": [
+            {
+                "from": "icon/",
+                "to": "icon/",
+                "filter": [
+                    "**/*"
+                ]
+            }
+        ],
+        "win": {
+            "icon": "icon/iconaAp.ico",
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ]
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true
+        },
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "marcofulco",
+                "repo": "ApSmartDesktop",
+                "releaseType": "release",
+                "private": false
+            }
+        ]
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
+    "author": "Online Snc",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^22.0.0",
+        "electron-builder": "^23.6.0"
     },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "marcofulco",
-        "repo": "ApSmartDesktop",
-        "releaseType": "release",
-        "private": false
-      }
-    ]
-  },
-  "author": "Online Snc",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^22.0.0",
-    "electron-builder": "^23.6.0"
-  },
-  "dependencies": {
-    "electron-updater": "^5.3.0"
-  }
+    "dependencies": {
+        "electron-updater": "^5.3.0",
+        "events": "^3.3.0",
+        "fs": "^0.0.1-security",
+        "net": "^1.0.2",
+        "ws": "^8.17.0"
+    }
 }
