@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 const fs = require('fs');
-const wss = new WebSocket.Server({ port: 18787 });
+const wss = new WebSocket.Server({ port: 18788 });
 const EventEmitter = require('events');
 const PosIgenico = require('./clsPosIgenico.js');
 const clsBase = require('./clsBase.js');

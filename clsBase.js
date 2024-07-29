@@ -5,7 +5,7 @@ class clsBase extends EventEmitter {
     logTxt(msg) {
         const filePath = './logError.txt';
         const data = new Date();
-        msg = `${data.toISOString()} - ${msg}\n`;
+        msg = `${data.toLocaleString()} - ${msg}\n`;
         try {
             fs.appendFileSync(filePath, msg, 'utf8');
         } catch (err) {

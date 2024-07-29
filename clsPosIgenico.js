@@ -12,39 +12,39 @@ class PosIgenico extends clsBase {
         this.operazione = operazione;
         this.datiPos = datiPos;
         this.callback = callback;
-        
+        this.logMessage='';
         this.contRisposta = 0;
-        this.idPos = this.operazione.idPos ;
-        if(this.idPos == '' || this.idPos == undefined) {
+        this.idPos = this.operazione.idPos;
+        if (this.idPos == '' || this.idPos == undefined) {
             this.error = "Impossibile connettersi al POS: ID POS non definito";
             this.generaRisposta();
             return;
         }
         this.ip = this.datiPos.ip;
-        if(this.ip == '' || this.ip == undefined) {
+        if (this.ip == '' || this.ip == undefined) {
             this.error = "Impossibile connettersi al POS: IP non definito";
             this.generaRisposta();
             return;
         }
         this.importo = this.operazione.importo;
-        if(this.importo == '' || this.importo == undefined) {
+        if (this.importo == '' || this.importo == undefined) {
             this.error = "Impossibile connettersi al POS: Importo non definito";
             this.generaRisposta();
             return;
         }
-        
+
         this.creaSocket();
     }
     creaSocket() {
         // return new Promise((resolve, reject) => {
         this.socket.connect(9100, this.ip, () => {
             this.socket.setTimeout(30000); // 30 second timeout
-            
+
             // this.socket.on('open', () => {
-                this.elaboraRichiesta();
+            this.elaboraRichiesta();
             // });
 
-            
+
         });
 
         this.socket.on('error', (err) => {
@@ -55,8 +55,18 @@ class PosIgenico extends clsBase {
         // });
     }
     chiudiSocket() {
-        this.socket.end();
-        this.socket.destroy();
+        let ackToSend = this.hexToStr("0x06") + this.hexToStr("0x03") + this.hexToStr("0x7A");
+        this.socket.write(ackToSend, 'utf-8', (err) => {
+            this.socket.end();
+            this.socket.destroy();
+            this.generaRisposta();
+            // if (err) {
+            //     this.error = "Errore durante l'invio della risposta di chiusura al POS.";
+            //     this.generaRisposta();
+            //     return;
+            // }
+        });
+        
     }
     sendStatusRequest() {
         // return this.creaSocket()
@@ -82,21 +92,23 @@ class PosIgenico extends clsBase {
         //     .then(() => {
         const formattedAmount = (this.importo * 100).toFixed(0).padStart(6, '0');
         const message = `${this.idPos}P000000010000000${formattedAmount}                                                                                                    Servizio vendita      xPrimo00000000`;
+        this.logTxt(message);
+        this.logMessage= message;
         const fullMessage = String.fromCharCode(0x02) + message + String.fromCharCode(0x03);
         const checksum = this.generateControlValue(fullMessage);
-        this.socket.write(fullMessage + checksum, 'utf-8' ,(err) => {
+        this.socket.write(fullMessage + checksum, 'utf-8', (err) => {
             // this.logTxt('Messaggio inviato: ' + fullMessage+ checksum);
             if (err) {
                 this.error = "Errore durante l'invio dell'importo al POS.";
                 this.generaRisposta();
                 return;
             }
-            
+
         });
         this.rispostaServer();
 
     }
-    rispostaServer(){
+    rispostaServer() {
         // if(this.contRisposta >=3){
         //     this.error = "Impossibile connettersi al POS";
         //     this.generaRisposta();
@@ -105,36 +117,43 @@ class PosIgenico extends clsBase {
         this.socket.on('data', (data) => {
             this.contRisposta++;
             var data = data.toString();
-            if (data.includes('E01')) {
+            
+            if (data.indexOf('E01') != -1) {
+                this.logTxt(data);
                 // throw new Error("Pagamento non effettuato");
                 this.error = "Pagamento non effettuato";
-                this.generaRisposta();
+                this.chiudiSocket();
                 return;
             }
-            if (data.indexOf(this.hexToDec("0x15")) != -1) {
-                this.error = "Errore comando errato";
-                this.generaRisposta();
-                return;
-            }
+            // if (data.indexOf(this.hexToDec("0x15")) != -1) {
+            //     this.logTxt(data);
+            //     this.error = "Errore comando errato";
+            //     this.chiudiSocket();
+            //     return;
+            // }
             if (data.indexOf('E00') != -1) {
                 this.result = 'ok';
+                this.alert = '';
+                this.error = '';
                 this.chiudiSocket();
-                this.generaRisposta();
+                // this.generaRisposta();
                 return;
             }
+            this.logTxt(data);
         });
     }
     generaRisposta() {
-        this.chiudiSocket();
+        // this.chiudiSocket();
         this.resposta = {
             error: this.error,
             alert: this.alert,
             result: this.result
         };
-        if(this.error != ''){
+        if (this.error != '') {
             this.logTxt(this.error);
+            this.logTxt(this.logMessage);
         }
-        if(this.callback != ''){
+        if (this.callback != '') {
             this.callback(JSON.stringify(this.resposta));
         }
 
@@ -159,6 +178,18 @@ class PosIgenico extends clsBase {
     }
     hexToDec(hexString) {
         return parseInt(hexString, 16);
+    }
+    generaRispostaDiChiusura(){
+        //$ackToSend = $this->hexToStr("0x06") . $this->hexToStr("0x03") . $this->hexToStr("0x7A");
+        //$bytesWritten = socket_write($this->socket, $ackToSend, strlen($ackToSend));
+        let ackToSend = this.hexToStr("0x06") + this.hexToStr("0x03") + this.hexToStr("0x7A");
+        this.socket.write(ackToSend, 'utf-8', (err) => {
+            if (err) {
+                this.error = "Errore durante l'invio della risposta di chiusura al POS.";
+                this.generaRisposta();
+                return;
+            }
+        });
     }
 
 }
